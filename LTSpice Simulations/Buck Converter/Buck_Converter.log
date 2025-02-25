@@ -1,33 +1,45 @@
 Circuit: * D:\Work and Coper Onion\Senior Projects\Switch-Mode-Power-Supply\LTSpice Simulations\Buck Converter\Buck_Converter.asc
 
-WARNING: Less than two connections to node n001.  This node is used by rload.
-Direct Newton iteration for .op point succeeded.
-Heightened Def Con from 0.000280001 to 0.000280001
-Heightened Def Con from 0.000800001 to 0.000800001
-Heightened Def Con from 0.0012 to 0.0012
-Heightened Def Con from 0.00188 to 0.00188
-Heightened Def Con from 0.0084 to 0.0084
-Heightened Def Con from 0.0092 to 0.0092
-Heightened Def Con from 0.00932 to 0.00932
-Heightened Def Con from 0.01208 to 0.01208
-Heightened Def Con from 0.03746 to 0.03746
-Heightened Def Con from 0.05348 to 0.05348
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-05
+Gmin = 1.6455e-06
+Gmin = 1.76685e-07
+Gmin = 1.89714e-08
+Gmin = 2.03704e-09
+Gmin = 2.18725e-10
+Gmin = 2.34854e-11
+Gmin = 2.52173e-12
+Gmin = 2.70769e-13
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
 
-Date: Mon Feb 17 01:58:59 2025
-Total elapsed time: 8.192 seconds.
+Heightened Def Con from 0.00554 to 0.00554
+Heightened Def Con from 0.00946 to 0.00946
+Heightened Def Con from 0.2502 to 0.2502
+Heightened Def Con from 0.38492 to 0.38492
+
+Date: Mon Feb 24 22:47:47 2025
+Total elapsed time: 339.119 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 2472359
-traniter = 2472341
-tranpoints = 887043
-accept = 684608
-rejected = 202445
-matrix size = 23
-fillins = 1
+totiter = 37504858
+traniter = 37504416
+tranpoints = 11824910
+accept = 8626332
+rejected = 3198582
+matrix size = 50
+fillins = 13
 solver = Normal
-Avg thread counts: 1.0/1.0/1.0/1.0
-Matrix Compiler1: 1.33 KB object code size  0.5/0.4/[0.2]
-Matrix Compiler2: 1.92 KB object code size  0.3/0.5/[0.2]
+Avg thread counts: 1.0/2.0/1.0/1.0
+Matrix Compiler1: 3.77 KB object code size  1.1/0.6/[0.3]
+Matrix Compiler2: 4.48 KB object code size  0.5/0.8/[0.3]
 
