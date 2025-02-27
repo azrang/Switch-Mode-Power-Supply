@@ -31,9 +31,9 @@ Some of the circuitry for the project include:
 - 3 isolated grounds
 
 - ## Firmware
-Arduino Setup:
-ESP32 Dev Module Board Type
-Upload Speed: 115200
+Arduino IDE Setup:
+- ESP32 Dev Module Board Type
+- Upload Speed: 115200
 
 # Contributors
 This project was done by a group of three friends:
