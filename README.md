@@ -30,7 +30,7 @@ Some of the circuitry for the project include:
 - Feedback loop using an error amplifier
 - 3 isolated grounds
 
-- ## Firmware
+## Firmware
 Arduino IDE Setup:
 - ESP32 Dev Module Board Type
 - Upload Speed: 115200
