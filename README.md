@@ -30,6 +30,11 @@ Some of the circuitry for the project include:
 - Feedback loop using an error amplifier
 - 3 isolated grounds
 
+## Firmware
+Arduino IDE Setup:
+- ESP32 Dev Module Board Type
+- Upload Speed: 115200
+
 # Contributors
 This project was done by a group of three friends:
 - Azra Rangwala (EE'25)
