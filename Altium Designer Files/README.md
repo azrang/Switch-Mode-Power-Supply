@@ -14,7 +14,7 @@ This page has all of the external connectors for the board: XT30 connectors for 
 This page has most of the core circuitry for the SMPS Channel A & B. This includes diode bridge rectifier, 5V and 3V3 power lines, flyback converters, HV (from flyback) and LV (buck converter), current sense, over voltage protection, output A & B enable, parallel & series mode relays, voltage & current knobs, temperature sensor, feedback circuit, and the feedback transformer.
 
 ## Page 3 - MCU & USB
-![Schematic_Page_3_MCU_USB](/Altium%20Designer%20Files/Altium%20Images/Schematic_Page_3_MCU_USB.png)
+
 
 This page has the pins for both MCU A (Channel A) and MCU B (Channel B & C), as well as the USB2.0 circuitry to support USBC charging.
 
