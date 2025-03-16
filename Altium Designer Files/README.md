@@ -1,4 +1,4 @@
-Note: The board is nearly finished, will be gerbered out soon. This is what the current board looks like. The final Altium project will be zipped here as well once the board has been gerbered out.
+Note: The board is nearly finished, will be gerbered out soon, this is what the current board looks like. The final Altium project will be zipped here as well once the board has been gerbered out.
 
 These are files from the Altium Designer for the Schematic and the Layout. If the schematic is difficult to see, it can also be viewed in the SMPS_Schematic.pdf file. 
 
