@@ -1,4 +1,12 @@
-These are files from the Altium Designer for the Schematic and the Layout. If the schematic was exported to the "SMPS_Schematic.pdf" file as a SmartPDF from Altium Designer so the nets are active links. The "Project Outputs for SMPS.zip" is a final with all the gerber files that can be used to fabricate the board to manufacture the board. The settings chosen are specifically for JLC PCB.
+These are files from the Altium Designer for the Schematic and the Layout. 
+
+The "Board Information Report.txt" contains has information on the total number of components (352), connections (753), cooper utilization (87%, 91%, 92%, 92%), number of vias (289), etc.
+
+The "Project Outputs for SMPS.zip" is a final with all the gerber files that can be used to fabricate the board to manufacture the board. The settings chosen are specifically for JLC PCB.
+
+The schematic was exported to the "SMPS_Schematic.pdf" file as a SmartPDF from Altium Designer so the nets are active links. 
+
+The "SMPS.zip" contains the Altium files (schematic, layout, etc.).
 
 # Layout
 ## Components 
