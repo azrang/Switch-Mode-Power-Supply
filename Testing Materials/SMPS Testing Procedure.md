@@ -19,6 +19,7 @@
 	- If you need to touch them for any reason, wait for them to discharge (based on the number below).
 - ***DO NOT UPLOAD CODE TO THE ESP32 WHEN THE BOARD IS ON.***
 	- Take it off, upload the code, and then put it on.
+        - Test scripts can be found in the Firmware/Test Scripts directory.
 
 # 1. Input Circuit
 1. This is to verify the input circuit does rectify the AC input.
@@ -69,14 +70,22 @@
 1. This is to test the temperature sensor.
 2. Solder on **C37, R46, R47, U7**.
 3. Solder on $50k\Omega$ for **R54**.
-	- Make sure the temperature sensor sends HIGH to *A_TMP_SNSE* at room temperature.
-	- Make sure the temperature sensor sends a LOW signal with hot air gun at $55^{\circ}C$.
-		- The temperature sensor should go off at around $53^{\circ}C$.
-4. Determine what an appropiate resistor/temperature cut off is.
+        - Run the Channel_A_Temp_Sense.cpp file.
+		- Make sure the temperature sensor sends HIGH to *A_TMP_SNSE* at room temperature.
+                        - *A_FUSE* should send a HIGH (fuse LED is HIGH).
+		- Make sure the temperature sensor sends a LOW signal with hot air gun at $55^{\circ}C$ aimed at the temperature sensor.
+                        - *A_FUSE* should send a LOW (fuse LED is LOW).
+			- The temperature sensor should go off at around $53^{\circ}C$.
+5. Determine what an appropiate resistor/temperature cut off is.
 	- Few choices here. Recommend using a lower temperature threshold first before moving onto higher threshold.
 		- $50k\Omega$ for $53^\circ C$ threshold
 		- $30k\Omega$ for $79^{\circ}C$ threshold
 		- $15k\Omega$ for $100^{\circ}C$ threshold
+
+## Channel A External Connections Part 2
+1. This is testing the input button for Channel A.
+2. Solder on external JST connectors for Channel A labelled **LCD_A, BUTTON_A, A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**, from the *External*.
+3. Test to make sure these connections work.
 
 ## Channel A Transformers
 1. This is to test the flyback & feedback transformer.
@@ -153,7 +162,7 @@
 	- Measure the feedback signal from the MCU, *A_VOL_SENSE*, map it to the calculated output voltage from the OpAmp circuit, and see how it compares to the actual `CHANNEL_A` output (should be accurate within 50mV).
 	- With this new mapping, the MCU should use *A_VOL_SENSE* as the actual voltage and adjust *A_DRIVE* (or *A_BUCK*) accordingly.
 
-## Channel A External Connections
+## Channel A External Connections Part 2
 1. This is testing the input button for Channel A.
 2. Solder on external JST connectors for Channel A labelled **LCD_A, BUTTON_A, A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**, from the *External*.
 3. Test to make sure these connections work.
