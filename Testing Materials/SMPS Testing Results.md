@@ -1,5 +1,4 @@
-# 1. Independent Channel A 
-## Input Circuit
+# 1. Input Circuit
 
 1. Soldered **BR1, F1-F2, J1, R15-R16, R99** from the *Input* and test points for `PRI_GND` & `UNREG_DC`. Place 12A fuse.
    	- AC output on `UNREG_DC` with rocker switch OFF: No Output
