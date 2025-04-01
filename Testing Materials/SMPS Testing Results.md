@@ -14,10 +14,8 @@
 4. Tested AC input waveform. ![InputCircuit_AC](Images/InputCircuit_AC.png)
 
 
-7. If the AC output for `UNREG_DC` has higher Vpp, then keep **D1-D4** on and move to step 6. Otherwise, desolder **D1-D4**, and solder on **BR1**. 
-	- Verify the AC Output for `UNREG_DC` is the same as before if using **BR1** before continuing on.
-8. Solder on **C7-C11** from the *Input*.
-9. Test the filtered input:
+5. Soldered on **C7-C11** from the *Input*.
+9. Tested the filtered input:
 	- AC output on `UNREG_DC` (Expected near DC output, record ripple).
 		- Can swap out capacitors with bigger value alternative capacitors from JLab to see if the rippling can be reduced significantly.
 	- Check capacitor voltage is 0V after the rocker switch is OFF for 120 seconds.
