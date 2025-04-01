@@ -18,7 +18,7 @@ Some of the circuitry for the project include:
 - Safety Circuits
     - Common choke
     - Zener diodes
-    - (@ilona you got this part)
+    - OVP
     - OCP
     - UVP
 - Diode Rectifier
@@ -31,9 +31,8 @@ Some of the circuitry for the project include:
 - 3 isolated grounds
 
 ## Firmware
-Arduino IDE Setup:
-- ESP32 Dev Module Board Type
-- Upload Speed: 115200
+Two ESP32 Dev Modules
+
 
 # Contributors
 This project was done by a group of three friends:
