@@ -70,7 +70,7 @@
 2. Solder on **C37, R46, R47, U7**.
 3. Solder on $50k\Omega$ for **R54**.
 	- Make sure the temperature sensor sends HIGH to *A_TMP_SNSE* at room temperature.
-	- Make sure the temperature sensor sends a LOW signal with hot air gun at 55 Celsius.
+	- Make sure the temperature sensor sends a LOW signal with hot air gun at $55^{\circ}C$.
 		- The temperature sensor should go off at around $53^{\circ}C$.
 4. Determine what an appropiate resistor/temperature cut off is.
 	- Few choices here. Recommend using a lower temperature threshold first before moving onto higher threshold.
