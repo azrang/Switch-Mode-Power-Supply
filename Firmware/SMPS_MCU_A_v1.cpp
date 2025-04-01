@@ -9,15 +9,6 @@
 // voltage and current sense calculations
 // PWM calculations
 
-//possibly turn everything into tasks
-
-
-
-//other buttons parallel and series interfering
-
-
-
-
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 
@@ -106,12 +97,12 @@ void setup()
   timerAttachInterrupt(setupTimer, &onSetupTimer, true);
   timerAlarmWrite(setupTimer, 30000000, false); //30s
 
-  outputTimer = timerBegin(0,80, true);
+  outputTimer = timerBegin(1,80, true);
   timerAttachInterrupt(outputTimer, &onOutputTimer, true);
   timerAlarmWrite(outputTimer, 10000000, false); //10s
 
   // False Start Prevention
-  if (digitalRead(A_BUTT) || digitalRead(PARALLEL_BUTT) || digitalRead(SERIES_BUTT)) //this isnt workin properly???
+  if (digitalRead(A_BUTT) || digitalRead(PARALLEL_BUTT) || digitalRead(SERIES_BUTT))
   {
     while(1)
     {
@@ -164,7 +155,7 @@ void subway(void *pvParameters)
       }
       else
       {
-        flyDrive(12); //what if butta goes low here
+        flyDrive(12);
         if (digitalRead(A_BUTT) && !interrupt)
         {
           digitalWrite(HV_LV_OUT, 1);
@@ -176,7 +167,7 @@ void subway(void *pvParameters)
     }
     else
     {
-      Serial.println("else else");
+      Serial.println("s3");
       digitalWrite(OUT_ENABLE, 1);
       if (abs(vPotCalc-vSenseCalc) > 0.05)
       {
@@ -184,6 +175,7 @@ void subway(void *pvParameters)
         timerAlarmEnable(outputTimer);
         if (vPotCalc > 10)
         {
+          Serial.println("trying");
           flyDrive(vPotCalc);
         }
         else
@@ -206,8 +198,9 @@ void subway(void *pvParameters)
           interrupt = true;
         }
       }
-      vTaskDelay(pdMS_TO_TICKS(5));
+      
       lcdScreen(vSenseCalc, cSenseCalc);
+      vTaskDelay(pdMS_TO_TICKS(15));
     }
   }
 }
@@ -275,8 +268,6 @@ void IRAM_ATTR onOutputTimer()
   interrupt = true;
 }
 
-
-
 void death (void* pvParameters)
 {
   for (;;)
@@ -286,7 +277,6 @@ void death (void* pvParameters)
     ledcWrite(1, 0);
     digitalWrite(OUT_ENABLE, 0); 
     digitalWrite(HV_LV_OUT, 0);
-    Serial.println("dying again");
     lcd.setCursor(0, 0);
     switch(faultState)
     {
@@ -341,6 +331,7 @@ void flyDrive(float vComp)
     vTaskDelay(pdMS_TO_TICKS(2));
     err = vComp - vSenseCalc;
   }
+  vTaskDelay(pdMS_TO_TICKS(5));
 }
 
 // Controls the Buck Converter PWM signals
