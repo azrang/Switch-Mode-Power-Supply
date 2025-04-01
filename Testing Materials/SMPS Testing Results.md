@@ -11,6 +11,7 @@
 	  ![InputCircuit_Diode](Images/InputCircuit_Diode.png)
 3. **BR1** vs **D1-D4** results: **D1-D4** had a lower voltage drop compared to **BR1**. Will continue with **D1-D4** for future testing.
 
+4. Tested AC input waveform. ![InputCircuit_AC](Images/InputCircuit_AC.png)
 
 
 7. If the AC output for `UNREG_DC` has higher Vpp, then keep **D1-D4** on and move to step 6. Otherwise, desolder **D1-D4**, and solder on **BR1**. 
