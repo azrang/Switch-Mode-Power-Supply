@@ -9,6 +9,11 @@
 // voltage and current sense calculations
 // PWM calculations
 
+// round the sense and knob float values to 3 decimal points
+// serial monitor
+// change variable names to indicate when they are global or not, gbl
+// change f1 to something more logical
+
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 
@@ -36,9 +41,9 @@ const int HV_LV_OUT = 18; // MCU_A_GPIO18
 const int DRIVE = 4; // MCU_A_GPIO4
 const int FLT_ALERT = 2; // MCU_A_GPIO2
 
-void dominos (void*);
-void subway (void*);
-void death (void*);
+void dominos (void*); // Core 0
+void subway (void*);  // Core 1
+void death (void*);   // Core 1
 void lcdScreen(float, float);
 void readKnobs();
 void readSense();
@@ -93,11 +98,11 @@ void setup()
   pinMode(OUT_ENABLE, OUTPUT);
   pinMode(HV_LV_OUT, OUTPUT);
 
-  setupTimer = timerBegin(0,80, true);
+  setupTimer = timerBegin(0,80, true);  // State S2 Timer
   timerAttachInterrupt(setupTimer, &onSetupTimer, true);
   timerAlarmWrite(setupTimer, 30000000, false); //30s
 
-  outputTimer = timerBegin(1,80, true);
+  outputTimer = timerBegin(1,80, true); // State S3 Timer
   timerAttachInterrupt(outputTimer, &onOutputTimer, true);
   timerAlarmWrite(outputTimer, 10000000, false); //10s
 
@@ -108,21 +113,25 @@ void setup()
     {
       lcd.setCursor(0, 0);
       lcd.print("Turn Off Buttons");
+      lcd.setCursor(0, 1);
+      lcd.print("Restart SMPS               ");
     }
   }
   xTaskCreatePinnedToCore(dominos, "Dominatrix", 2048, NULL, 2, &domTaskHandle, 0);
   xTaskCreatePinnedToCore(subway, "Sub", 2048, NULL, 2, &subTaskHandle, 1);
 }
 
+// Always running on Core 0
+// Output + Interrupt Sensing
 void dominos (void* pvParameters) {
   for (;;) {
     readSense();
-    if (interrupt && !f1)
+    if (interrupt && !f1) // Happens only once 
     {
       vTaskDelete(subTaskHandle);
       vTaskDelay(pdMS_TO_TICKS(5));
       xTaskCreatePinnedToCore(death, "death", 2048, NULL, 8, &deathTaskHandle, 1);
-      f1 = 1;
+      f1 = 1; // Restart MCU to get f1 = 0
     }
     vTaskDelay(pdMS_TO_TICKS(5)); // Feeding the dog
   }
@@ -146,7 +155,7 @@ void subway(void *pvParameters)
       prevStateA = 0;
       vTaskDelay(pdMS_TO_TICKS(10));
     }
-    else if((stateA == 1) && (prevStateA == 0))
+    else if((stateA == 1) && (prevStateA == 0))  // possibly two timers HV vs LV timer
     {
       timerRestart(setupTimer);
       timerAlarmEnable(setupTimer);
@@ -171,16 +180,24 @@ void subway(void *pvParameters)
       Serial.println("s3");
       digitalWrite(OUT_ENABLE, 1);
       lcdScreen(vSenseCalc, cSenseCalc);
-      if ((cSenseCalc - cPotCalc) > 0.01) 
+      // Fuse Check
+      if (digitalRead(A_FUSE) && !(vSenseCalc > 0)) //check fi this actually works
       {
-        vTaskDelay(pdMS_TO_TICKS(15)); //delay to make sure its not a current spike
+        faultState = BLOWNFUSE;
+        interrupt = true;
+      }
+      // Current Check
+      if ((cSenseCalc - cPotCalc) > 0.01) // if big difference in curret, kill immediately, if its below 20 mA, wait, then decide to kill or not
+      {
+        vTaskDelay(pdMS_TO_TICKS(15)); //delay to make sure its not a current spike //change delay later
         if ((cSenseCalc - cPotCalc) > 0.01)
         {
           faultState = OVERCURRENT;
           interrupt = true;
         }
       }
-      if (abs(vPotCalc-vSenseCalc) > 0.05)
+      // Voltage Check
+      if (abs(vPotCalc-vSenseCalc) > 0.05) //check current in fly and drive while loops, die if over current
       {
         timerRestart(outputTimer);
         timerAlarmEnable(outputTimer);
@@ -195,11 +212,7 @@ void subway(void *pvParameters)
         }
         timerAlarmDisable(outputTimer);
       }
-      if (digitalRead(A_FUSE) && (vSenseCalc < 0.1)) //change v value
-      {
-        faultState = BLOWNFUSE;
-        interrupt = true;
-      }
+      
       vTaskDelay(pdMS_TO_TICKS(15));
     }
   }
@@ -226,7 +239,7 @@ void readKnobs()
 void readSense()
 {
   int vSense = analogRead(VOL_SENSE);
-  vSenseCalc = ((vSense / 4095.0) * 19.0); // math might have to change for v and c
+  vSenseCalc = ((vSense / 4095.0) * 20.0); // math might have to change for v and c
 
   int cSense = analogRead(CUR_SENSE);
   cSenseCalc = (cSense / 4095.0) * 3.0;
@@ -310,22 +323,24 @@ void death (void* pvParameters)
     
     }
     lcd.setCursor(0, 1);
-    lcd.print("                    ");
+    lcd.print(String("Restart SMPS: E") + String(faultState) + String("       "));
     vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }
 
+// fix math
+// add a min and max duty cycle clamping
+
 // Controls the Flyback PWM signals
 void flyDrive(float vComp) 
 {
-  float err = 2; 
   if (prevStateA == 0) // Only allows change to the PWM rate if a new Pot Value was given
   {
     drivePWM = (((vComp - 10) / 10) * 154) + 256; //fix math
     ledcWrite(0, drivePWM);
   }
-
-  while(!interrupt && (abs(err) > 0.05) && digitalRead(A_BUTT)) 
+  float err = vComp - vSenseCalc;
+  do
   {
     drivePWM =  ((err / 10) * 500); //fix math
     ledcWrite(0, drivePWM);
@@ -333,19 +348,20 @@ void flyDrive(float vComp)
     vTaskDelay(pdMS_TO_TICKS(2));
     err = vComp - vSenseCalc;
   }
+  while(!interrupt && (abs(err) > 0.05) && digitalRead(A_BUTT));
   vTaskDelay(pdMS_TO_TICKS(5));
 }
 
 // Controls the Buck Converter PWM signals
 void buckDrive() 
 {
-  float err = 2; 
   if (prevStateA == 0)
   {
     buckPWM = (((vPotCalc - 10) / 10) * 154) + 256;
-    ledcWrite(0, buckPWM);
+    ledcWrite(1, buckPWM);
   }
-  while(!interrupt && (abs(err) > 0.05) && digitalRead(A_BUTT))
+  float err = vPotCalc - vSenseCalc;
+  do
   {
     buckPWM = ceil((((err / 10) * 154) + 256));
     ledcWrite(1, buckPWM);
@@ -354,6 +370,7 @@ void buckDrive()
     vTaskDelay(pdMS_TO_TICKS(2));
     err = vPotCalc - vSenseCalc;
   }
+  while(!interrupt && (abs(err) > 0.05) && digitalRead(A_BUTT));
 }
 
 void loop() {
