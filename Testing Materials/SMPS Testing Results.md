@@ -4,11 +4,12 @@
 1. Soldered **BR1, F1-F2, J1, R15-R16, R99** from the *Input* and test points for `PRI_GND` & `UNREG_DC`. Place 12A fuse.
    	- AC output on `UNREG_DC` with rocker switch OFF: No Output
    	- AC output on `UNREG_DC` with rocker switch ON:
-   	  ![A_InputCircuit_BR1](Images/A_InputCircuit_BR1.png)
+   	  ![InputCircuit_BR1](Images/InputCircuit_BR1.png)
 2. Desoldered **BR1** and solder on **D1-D4** from the *Input*.
-	- AC output on `UNREG_DC` with rocker switch OFF:
+	- AC output on `UNREG_DC` with rocker switch OFF: No Output
 	- AC output on `UNREG_DC` with rocker switch ON:
-3. **BR1** vs **D1-D4** results:
+	  ![InputCircuit_Diode](Images/InputCircuit_Diode.png)
+3. **BR1** vs **D1-D4** results: **D1-D4** had a lower voltage drop compared to **BR1**. Will continue with **D1-D4** for future testing.
 
 
 
