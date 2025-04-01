@@ -120,6 +120,7 @@ void dominos (void* pvParameters) {
     if (interrupt && !f1)
     {
       vTaskDelete(subTaskHandle);
+      vTaskDelay(pdMS_TO_TICKS(5));
       xTaskCreatePinnedToCore(death, "death", 2048, NULL, 8, &deathTaskHandle, 1);
       f1 = 1;
     }
@@ -169,6 +170,16 @@ void subway(void *pvParameters)
     {
       Serial.println("s3");
       digitalWrite(OUT_ENABLE, 1);
+      lcdScreen(vSenseCalc, cSenseCalc);
+      if ((cSenseCalc - cPotCalc) > 0.01) 
+      {
+        vTaskDelay(pdMS_TO_TICKS(15)); //delay to make sure its not a current spike
+        if ((cSenseCalc - cPotCalc) > 0.01)
+        {
+          faultState = OVERCURRENT;
+          interrupt = true;
+        }
+      }
       if (abs(vPotCalc-vSenseCalc) > 0.05)
       {
         timerRestart(outputTimer);
@@ -184,22 +195,11 @@ void subway(void *pvParameters)
         }
         timerAlarmDisable(outputTimer);
       }
-      if (digitalRead(A_FUSE) && vSenseCalc < 0.1) //change v value
+      if (digitalRead(A_FUSE) && (vSenseCalc < 0.1)) //change v value
       {
         faultState = BLOWNFUSE;
         interrupt = true;
       }
-      if ((cSenseCalc - cPotCalc) > 0.01) 
-      {
-        vTaskDelay(pdMS_TO_TICKS(15)); //delay to make sure its not a current spike
-        if (cSenseCalc - cPotCalc > 0.01)
-        {
-          faultState = OVERCURRENT;
-          interrupt = true;
-        }
-      }
-      
-      lcdScreen(vSenseCalc, cSenseCalc);
       vTaskDelay(pdMS_TO_TICKS(15));
     }
   }
@@ -273,11 +273,13 @@ void death (void* pvParameters)
   for (;;)
   {
     Serial.println("dying");
+    detachInterrupt(TEMP);
     ledcWrite(0, 0);
     ledcWrite(1, 0);
     digitalWrite(OUT_ENABLE, 0); 
     digitalWrite(HV_LV_OUT, 0);
     lcd.setCursor(0, 0);
+    Serial.println("this again");
     switch(faultState)
     {
       case OVERTEMP:
