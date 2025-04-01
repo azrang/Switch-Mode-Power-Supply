@@ -1,16 +1,16 @@
 # 1. Independent Channel A 
 ## Input Circuit
-1. Soldered **BR1, F1-F2, J1, R15-R16, R99** from the *Input* and test points for `PRI_GND` & `UNREG_DC`.
-   - 
-3. 
-	- Place a 12A FB fuse across **F1** & **F2**.
-4. Test the input:
-	- AC output on `UNREG_DC` with rocker switch OFF (no output)
-	- AC output on `UNREG_DC` with rocker switch ON (Expected Full-Wave), recording the Vpp.
-5. Desolder **BR1** and solder on **D1-D4** from the *Input*.
-6. Test the input:
-	- AC output on `UNREG_DC` with rocker switch OFF (no output)
-	- AC output on `UNREG_DC` with rocker switch ON (Expected Full-Wave), recording the Vpp.
+
+1. Soldered **BR1, F1-F2, J1, R15-R16, R99** from the *Input* and test points for `PRI_GND` & `UNREG_DC`. Place 12A fuse.
+   	- AC output on `UNREG_DC` with rocker switch OFF: ![hi.png](Images/hi.png)
+   	- AC output on `UNREG_DC` with rocker switch ON:
+2. Desoldered **BR1** and solder on **D1-D4** from the *Input*.
+	- AC output on `UNREG_DC` with rocker switch OFF:
+	- AC output on `UNREG_DC` with rocker switch ON:
+3. **BR1** vs **D1-D4** results:
+
+
+
 7. If the AC output for `UNREG_DC` has higher Vpp, then keep **D1-D4** on and move to step 6. Otherwise, desolder **D1-D4**, and solder on **BR1**. 
 	- Verify the AC Output for `UNREG_DC` is the same as before if using **BR1** before continuing on.
 8. Solder on **C7-C11** from the *Input*.
