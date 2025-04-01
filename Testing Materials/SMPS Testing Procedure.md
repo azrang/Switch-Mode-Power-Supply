@@ -91,19 +91,20 @@
 1. This is to test the flyback & feedback transformer.
 2. Solder on **C24, C25, C26, T2, T4, Q29, Q35, Q38, Q39, R61, R70, R101** from the *Transformer* and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
 3. Check the flyback transformer outputs VDC.
-	- With the MCU, send a fixed PWM on *A_DRIVE* and record the VDC. 
-		- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS***.
-	- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using a voltmeter).
-	- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
-	- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance ***universal wait time***.
-4. Record PWM duty cycle vs. VDC output.
-	- Measure the duty cycle from 21V to 9.5V in 0.25V intervals.
-		- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
-	- Some extra notes
-		- The 12V number will be used for LV circuit.
-		- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-		- The flyback transformer is expected to output 20V to 10V in normal operation. The 21V and 9.5V values helps to ensure that all boundary conditions are tested and an upper/lower duty cycle can be found for the firmware (+ to account for voltage drop).
-### Get the interval for voltage checked by cult.
+	- Run the Channel_A_Transformer1.cpp file.
+		- With the MCU, send a fixed PWM on *A_DRIVE* and record the VDC & record how long it takes for output to settle (call this *time1*).
+			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS***.
+		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using a voltmeter).
+		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
+		- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance after ***universal wait time*** and redo step 3.
+5. Record PWM duty cycle vs. VDC output.
+	- Run the Channel_A_Transformer2.cpp file.
+		- Measure the duty cycle from 21V to 9.5V in 0.10V intervals after waiting *time1* seconds.
+			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
+		- Some extra notes
+			- The 12V number will be used for LV circuit.
+			- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
+			- The flyback transformer is expected to output 20V to 10V in normal operation. The 21V and 9.5V values helps to ensure that all boundary conditions are tested and an upper/lower duty cycle can be found for the firmware (+ to account for voltage drop).
 
 ## Channel A HV/LV 
 1. This is to test the HV & LV relays + buck converter.
