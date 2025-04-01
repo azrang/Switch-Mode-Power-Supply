@@ -10,10 +10,11 @@
 	  ![InputCircuit_Diode](Images/InputCircuit_Diode.png)
 3. **BR1** vs **D1-D4** results: **D1-D4** had a lower voltage drop compared to **BR1**. Will continue with **D1-D4** for future testing.
 
-4. Tested AC input waveform. ![InputCircuit_AC](Images/InputCircuit_AC.png)
+4. Tested AC input waveform.
+   	  ![InputCircuit_AC](Images/InputCircuit_AC.png)
 
 
-5. Soldered on **C7-C11** from the *Input*.
+6. Soldered on **C7-C11** from the *Input*.
 9. Tested the filtered input:
 	- AC output on `UNREG_DC`: 33.8V DC output, less than 0.5% ripple.
 	![InputCircuit_Cap_Ripple](Images/InputCircuit_Cap_Ripple.png)
