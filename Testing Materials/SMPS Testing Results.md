@@ -14,7 +14,7 @@
    	  ![InputCircuit_AC](Images/InputCircuit_AC.png)
 
 
-6. Soldered on **C7-C11** from the *Input*.
+6. Soldered on **C9-C11** from the *Input*.
 9. Tested the filtered input:
 	- AC output on `UNREG_DC`: 33.8V DC output, less than 0.5% ripple.
 	![InputCircuit_Cap_Ripple](Images/InputCircuit_Cap_Ripple.png)
