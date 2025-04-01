@@ -68,11 +68,11 @@
 ## Channel A Temperature Sensor
 1. This is to test the temperature sensor.
 2. Solder on **C37, R46, R47, U7**.
-3. Solder on $68k\Omega+5k\Omega$ or $73k\Omega$, for **R54**. 
+3. Solder on $50k\Omega$ for **R54**.
 	- Make sure the temperature sensor sends HIGH to *A_TMP_SNSE* at room temperature.
-	- Make sure the temperature sensor sends a LOW signal with human touch 
-		- The temperature sensor should go off at around $25^{\circ}C$.
-4. Desolder the resistors and solder on the proper **R54**. 
+	- Make sure the temperature sensor sends a LOW signal with hot air gun at 55 Celsius.
+		- The temperature sensor should go off at around $53^{\circt}C$.
+4. Determine what an appropiate resistor/temperature cut off is.
 	- Few choices here. Recommend using a lower temperature threshold first before moving onto higher threshold.
 		- $50k\Omega$ for $53^\circ C$ threshold
 		- $30k\Omega$ for $79^{\circ}C$ threshold
