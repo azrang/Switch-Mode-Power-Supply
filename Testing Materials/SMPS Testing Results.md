@@ -3,7 +3,8 @@
 
 1. Soldered **BR1, F1-F2, J1, R15-R16, R99** from the *Input* and test points for `PRI_GND` & `UNREG_DC`. Place 12A fuse.
    	- AC output on `UNREG_DC` with rocker switch OFF: No Output
-   	- AC output on `UNREG_DC` with rocker switch ON: ![A_InputCircuit_BR1](Images/A_InputCircuit_BR1.png)
+   	- AC output on `UNREG_DC` with rocker switch ON:
+   	  ![A_InputCircuit_BR1](Images/A_InputCircuit_BR1.png)
 2. Desoldered **BR1** and solder on **D1-D4** from the *Input*.
 	- AC output on `UNREG_DC` with rocker switch OFF:
 	- AC output on `UNREG_DC` with rocker switch ON:
