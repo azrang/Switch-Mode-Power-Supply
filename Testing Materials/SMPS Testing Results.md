@@ -16,8 +16,6 @@
 
 5. Soldered on **C7-C11** from the *Input*.
 9. Tested the filtered input:
-	- AC output on `UNREG_DC`: (Expected near DC output, record ripple).
-		- Can swap out capacitors with bigger value alternative capacitors from JLab to see if the rippling can be reduced significantly.
-	- Check capacitor voltage is 0V after the rocker switch is OFF for 120 seconds.
-		- This is the ***universal wait time*** for capacitors to discharge.
-		- Note: Might need to wait longer if the capacitance was increased
+	- AC output on `UNREG_DC`: 33.8V DC output, less than 0.5% ripple.
+	![InputCircuit_Cap_Ripple](Images/InputCircuit_Cap_Ripple.png)
+	- Capacitor discharged to 0V after 60 seconds after rocker switch is OFF.
