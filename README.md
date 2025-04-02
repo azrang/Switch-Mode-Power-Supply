@@ -4,7 +4,7 @@ This is a GitHub repo displaying all the files for the 2025 Cooper Union senior 
 
 ## Goals
 The goal of this senior project is to make a Switch Mode Power Supply that can:
-- Be SAFE (the 120V from the wall will be stepped down to 24V using a transformer)
+- Be SAFE (the 120V from the wall will be stepped down to 24V RMS using a transformer)
 - Do AC-DC conversion so it can be used as a lab bench power supply
 - Have 2 independent channels that range from 1-20V and 0-3A
 - Support series and parallel mode for these channels
