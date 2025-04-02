@@ -1,6 +1,6 @@
 # Switch Mode Power Supply
 
-This is a GitHub repo displaying all the files for the 2025 Cooper Union senior project, including the LTSpice simulations, and any final design files (block diagram, schematic, layout, etc.) for any boards manufactured. 
+This is a GitHub repo displaying all the files for the 2025 Cooper Union senior project, including the LTSpice simulations, firmware, testing procedures, and any final design files (block diagram, schematic, layout, etc.) for any boards manufactured. 
 
 ## Goals
 The goal of this senior project is to make a Switch Mode Power Supply that can:
@@ -16,7 +16,7 @@ The goal of this senior project is to make a Switch Mode Power Supply that can:
 ## Circuitry
 Some of the circuitry for the project include:
 - Safety Circuits
-    - Common choke
+    - Common mode choke
     - Zener diodes
     - OVP
     - OCP
@@ -31,7 +31,7 @@ Some of the circuitry for the project include:
 - 3 isolated grounds
 
 ## Firmware
-Two ESP32 Dev Modules
+Two ESP32 Dev Modules processing feedback and driving the circuit.
 
 
 # Contributors
