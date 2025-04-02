@@ -97,6 +97,7 @@
 		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using a voltmeter).
 		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
 		- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance after ***universal wait time*** and redo step 3.
+   		- Determine a good frequency and bit resolution for the PWM signal.
 5. Record PWM duty cycle vs. VDC output.
 	- Run the Channel_A_Transformer2.cpp file.
 		- Measure the duty cycle from 21V to 9.5V in 0.10V intervals after waiting *time1* seconds.
