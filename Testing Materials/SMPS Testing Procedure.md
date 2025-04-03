@@ -149,7 +149,7 @@
 2. Solder on **D9, D12, D13, J4, Q13, Q15, Q44, R26, R27, R31, R33** from *OVP* and test point `A_PROT_OUT`.
 	- Place a 3A on the fuse holder, J4.
 3. Testing the voltage drop
-	- Record the voltage drop across `OUT_A` & `A_PROT_OUT` (should be approximately 0.7V).
+	- Record the voltage drop across `OUT_A` & `A_PROT_OUT` (should be approximately 0.7V) using a voltmeter.
 
 ## Channel A Enable
 1. This is testing Channel A enable.
