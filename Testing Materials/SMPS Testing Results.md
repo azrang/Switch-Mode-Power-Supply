@@ -25,7 +25,7 @@
 2. Soldered on **C1, C3, C4, C5, C12, D41, L1, L5, R94, U2** from the *LVDD* and test points for `A_GND`, `A_5V`.
 3. Checked the `A_5V` rail.
 	- DC output on `A_5V` had ringing noise at a frequency of 42 kHz.
-  	![5V_Ringing(Images/5V_Ringing.png)
+  	![5V_Ringing](Images/5V_Ringing.png)
   	- 5V red LED turned on.
 	- Ignoring the ringing, the `A_5V` net has a max of 4.99V and a min 4.91V
   	![5V_Clean](Images/5V_Clean.png)
