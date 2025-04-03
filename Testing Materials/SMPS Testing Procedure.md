@@ -126,12 +126,11 @@
 5. Desolder **Q1, Q3** and solder on **Q12, Q56** (these are on the back). 
 6. Run the tests from step 4 again.
 7. Testing buck converter duty cycle vs. voltage output.
-	- Similar to the transformer, record the duty cycle to output voltage of the buck converter from 10V to 1V in 0.25V intervals.
+	- Similar to the transformer, record the duty cycle to output voltage of the buck converter from 10V to 1V in 0.10V intervals.
 		- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
 	- Some extra notes
 		- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-		- The buck converter is expected to output 10V to 1V in normal operation. The 2V lower end is because the buck converter can operate strange in the lower voltage ends, so the 1V should be tested more thoroughly later on.
-### Get the interval for voltage checked by cult.
+		- The buck converter is expected to output 10V to 1V in normal operation. Be wary when the output voltage is at the lower range since the buck converter can operate strange in the lower voltage ends.
 
 ## Channel A Current Sense
 1. This is to test the current sense.
