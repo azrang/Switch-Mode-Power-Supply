@@ -167,8 +167,9 @@
 1. This is to test the feedback signal from Channel A output.
 2. Solder on **D29, R67, R68, R69, U9** from *Feedback* and test point `A_SENSE_IN`.
 3. Test the feedback signal.
-	- Measure the feedback signal from the MCU, *A_VOL_SENSE*, map it to the calculated output voltage from the OpAmp circuit, and see how it compares to the actual `CHANNEL_A` output (should be accurate within 50mV).
-	- With this new mapping, the MCU should use *A_VOL_SENSE* as the actual voltage and adjust *A_DRIVE* (or *A_BUCK*) accordingly.
+	- Run the Channel_A_Feedback.cpp file.
+ 		- Measure the feedback signal from the MCU, *A_VOL_SENSE*, map it to the calculated output voltage from the OpAmp circuit, and see how it compares to the actual `CHANNEL_A` output (should be accurate within 50mV).
+		- With this new mapping, the MCU should use *A_VOL_SENSE* as the actual voltage and adjust *A_DRIVE* (or *A_BUCK*) accordingly.
 
 ## Channel A External Connections Part 2
 1. This is testing the input button for Channel A.
