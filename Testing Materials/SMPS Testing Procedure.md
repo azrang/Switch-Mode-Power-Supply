@@ -153,7 +153,7 @@
 
 ## Channel A Enable
 1. This is testing Channel A enable.
-2. Solder on **Q17, Q19, R24, R37** from *Enable* and test point `CHANNEL_A`.
+2. Solder on **C44, Q17, Q19, R24, R37, R62** from *Enable* and test point `CHANNEL_A`.
 3. Test the enable signal.
 	- Run the Channel_A_Enable1.cpp file.
 	 	- Send a LOW to *A_OUT_EN* and make sure `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
