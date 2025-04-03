@@ -121,7 +121,7 @@
 		- Confirm you hear the relays click as the *A_HV_LV_OUT* changes.
 	- Confirm that `FLY_OUT_A` and `OUT_A_LV` are both 12V. 
 		- `OUT_A_HV` should be floating.
-	- Confirm `OUT_A_BUCK` and `OUT_A_CURR` are the expected voltage (around 6V). 
+	- Confirm `OUT_A_BUCK` and `OUT_A_CURR` are the expected voltage (around 6V $\pm$ 1V). 
 		- If this isn't the case, move onto step 5. If it does work, move onto step 7.
 5. Desolder **Q1, Q3** and solder on **Q12, Q56** (these are on the back). 
 6. Run the tests from step 4 again.
