@@ -117,7 +117,7 @@
 	- Confirm that the input from `FLY_OUT_A` appears at `OUT_A_HV` and `OUT_A_CURR`. 
 		- `OUT_A_LV` should be floating.
 4. Test LV side (buck converter)
-	- Send a HIGH signal to *A_HV_LV_OUT* with `A_FLY_OUT_A` set to 12VDC and *A_BUCK* is set to 50% duty cycle.
+	- Send a HIGH signal to *A_HV_LV_OUT* with `FLY_OUT_A` set to 12VDC and *A_BUCK* is set to 50% duty cycle.
 		- Confirm you hear the relays click as the *A_HV_LV_OUT* changes.
 	- Confirm that `FLY_OUT_A` and `OUT_A_LV` are both 12V. 
 		- `OUT_A_HV` should be floating.
