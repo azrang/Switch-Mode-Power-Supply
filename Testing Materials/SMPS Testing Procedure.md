@@ -113,32 +113,36 @@
 1. This is to test the HV & LV relays + buck converter.
 2. Solder on **C23, D5, D6, K1, K2, L3, Q1, Q2, Q3, Q5, Q7, R17, R18, R21** from the *HV/LV* and test points `OUT_A_HV`, `OUT_A_LV`,`BUCK_A_\P\W\M`, `BUCK_A_PWM`,`OUT_A_BUCK`, and `OUT_A_CURR`.
 3. Test HV side (through line)
-	- Send a LOW signal to *A_HV_LV_OUT*. 
-	- Confirm that the input from `FLY_OUT_A` appears at `OUT_A_HV` and `OUT_A_CURR`. 
-		- `OUT_A_LV` should be floating.
+	- Run the Channel_A_HV_SW.cpp file.
+	 	- Send a LOW signal to *A_HV_LV_OUT*. 
+		- Confirm that the input from `FLY_OUT_A` appears at `OUT_A_HV` and `OUT_A_CURR`. 
+			- `OUT_A_LV` should be floating.
 4. Test LV side (buck converter)
-	- Send a HIGH signal to *A_HV_LV_OUT* with `FLY_OUT_A` set to 12VDC and *A_BUCK* is set to 50% duty cycle.
-		- Confirm you hear the relays click as the *A_HV_LV_OUT* changes.
-	- Confirm that `FLY_OUT_A` and `OUT_A_LV` are both 12V. 
-		- `OUT_A_HV` should be floating.
-	- Confirm `OUT_A_BUCK` and `OUT_A_CURR` are the expected voltage (around 6V $\pm$ 1V). 
-		- If this isn't the case, move onto step 5. If it does work, move onto step 7.
+	- Run the Channel_A_LV_Buck1.cpp file.
+	 	- Send a HIGH signal to *A_HV_LV_OUT* with `FLY_OUT_A` set to 12VDC and *A_BUCK* is set to 50% duty cycle.
+			- Confirm you hear the relays click as the *A_HV_LV_OUT* changes.
+		- Confirm that `FLY_OUT_A` and `OUT_A_LV` are both 12V. 
+			- `OUT_A_HV` should be floating.
+		- Confirm `OUT_A_BUCK` and `OUT_A_CURR` are the expected voltage (around 6V $\pm$ 1V).
+			- If this isn't the case, move onto step 5. If it does work, move onto step 7.
 5. Desolder **Q1, Q3** and solder on **Q12, Q56** (these are on the back). 
 6. Run the tests from step 4 again.
 7. Testing buck converter duty cycle vs. voltage output.
-	- Similar to the transformer, record the duty cycle to output voltage of the buck converter from 10V to 1V in 0.10V intervals.
-		- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
-	- Some extra notes
-		- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-		- The buck converter is expected to output 10V to 1V in normal operation. Be wary when the output voltage is at the lower range since the buck converter can operate strange in the lower voltage ends.
+	- Run the Channel_A_LV_Buck2.cpp file.
+	 	- Similar to the transformer, record the duty cycle to output voltage of the buck converter from 10V to 1V in 0.10V intervals.
+			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
+		- Some extra notes
+			- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
+			- The buck converter is expected to output 10V to 1V in normal operation. Be wary when the output voltage is at the lower range since the buck converter can operate strange in the lower voltage ends.
 
 ## Channel A Current Sense
 1. This is to test the current sense.
 2. Solder on **C31, C32, C33, D10, D11, R25, R30** from the *Current Sense* and test point `OUT_A`.
 3. Connect a $100\Omega$ resistor between `OUT_A` and `A_GND`.
 4. Testing current sense.
-	- Set the transformer output voltage to be 18V, 12V, 6V.
-	- Make sure the MCU reads 0.18A, 0.12A, and 0.06A within a ±0.01A tolerance.
+	- Run the Channel_A_CURR_SENSE.cpp file.
+	 	- Set `OUT_A_CURR` to be 18V, 12V, 6V in 5s intervals.
+		- Make sure the MCU displays 0.18A, 0.12A, and 0.06A within a ±0.10A tolerance.
 
 ## Channel A OVP
 1. This is for the OVP circuit.
@@ -186,6 +190,7 @@
 	- Set a current limit to 0.03A with the voltage to 6V and connect the output to a $100\Omega$ resistor to make sure the current limit turns on.
 3. Leave the power supply connected to a load for 30mins-60mins. 
 	- Make sure it is still working properly and there isn't any significant change (i.e. it doesn't become hot).
+4. MAKE SURE CURRENT IS WITHIN TOLERANCE, $\pm$ 0.01A
 
 # 2. Independent Channel B
 <u>Note:</u> This will be mostly identical to independent channel A except the refdes for the components will change to their channel B counterparts and some minor tweaks to the testing.
