@@ -66,6 +66,11 @@
 2. Solder on **J7, J8**, or the header pins for the ESP32 MCU A, from the *MCU*.
 3. Place the ESP32 on following the orientation on the board.
 	- Verify the LED on the ESP32 module turns on.
+4. Determine the accuracy of PWM duty cycle.
+	- Run the Channel_A_ESP32_PWM.cpp file.
+		- Set the PWM to 10kHz with 10% and measure how accurate the duty cycle is & record the difference.
+  		- Set the PWM to 50kHz with 10% and measure how accurate the duty cycle is & record the difference.
+   		- The greatest difference is will be denoted as *percent accuracy* and will be used later on.
 
 ## Channel A External Connections Part 1
 1. This is testing the input button & LCD screen for Channel A.
@@ -105,7 +110,7 @@
  		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*. 
 5. Record PWM duty cycle vs. VDC output.
 	- Run the Channel_A_Transformer2.cpp file.
-		- Measure the output voltage, `FLY_OUT_A`, with the duty cycle ranging from *minimum duty cycle* & *maximum duty cycle* in 1% increments at intervals ***5 seconds***.
+		- Measure the output voltage, `FLY_OUT_A`, with the duty cycle ranging from *minimum duty cycle* & *maximum duty cycle* in the *percent accuracy* increments at intervals ***5 seconds***.
 			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
 		- Some extra notes
 			- The 12V number will be used for LV circuit.
@@ -130,9 +135,12 @@
 			- If this isn't the case, move onto step 5. If it does work, move onto step 7.
 5. Desolder **Q1, Q3** and solder on **Q12, Q56** (these are on the back). 
 6. Run the tests from step 4 again.
-7. Testing buck converter duty cycle vs. voltage output.
+7. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
+	- Edit and run the Channel_A_LV_Buck1.cpp file.
+ 		- Based on the previous step, determine at what duty cycle 1V and 10V occurs at. Record these values as *minimum buck duty cycle* & *maximum buck duty cycle*. 
+8. Testing buck converter duty cycle vs. voltage output.
 	- Run the Channel_A_LV_Buck2.cpp file.
-	 	- Similar to the transformer, record the duty cycle to output voltage of the buck converter from 10V to 1V in 0.10V intervals.
+	 	- Similar to the transformer, record the output voltage at `OUT_A_BUCK` with the duty cycle set from *minimum buck duty cycle* to *maximum buck duty cycle* in increments of *percent accuracy* in intervals of ***5 seconds***. 
 			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
 		- Some extra notes
 			- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
@@ -163,9 +171,7 @@
 		- Send a HIGH to *A_OUT_EN* and make sure `OUT_A` and `CHANNEL_A` are nearly equal. If there is a voltage drop, record it.
 4. Remap all the duty cycle to output voltage.
 	- Run the Channel_A_Enable2.cpp file.
- 		- Redo the calculations for duty cycles to output voltage from the Channel A Transformer and Channel A HV/LV where the output voltage is measured at `CHANNEL_A` instead of from `FLY_OUT_A`.
-   			- Record the 
-		- Make sure to get the 12V level measured!
+ 		- Determine the appropiate duty cycles needed for the flyback transformer & buck converter to output 1V - 20V at `CHANNEL_A`. 
 
 ## Channel A Feedback
 1. This is to test the feedback signal from Channel A output.
