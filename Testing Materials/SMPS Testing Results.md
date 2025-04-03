@@ -37,6 +37,7 @@
 7. Checked the `A_3V3` rail.
 	- DC output on `A_3V3` had an average output of 3.17V.
 	- 3V3 yellow LED turned on.
+	![3V3](Images/3V3.png)
 
 ## Channel A ESP32
 1. This is to test the ESP32 is powered on. 
