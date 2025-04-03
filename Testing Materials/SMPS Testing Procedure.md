@@ -155,12 +155,13 @@
 1. This is testing Channel A enable.
 2. Solder on **Q17, Q19, R24, R37** from *Enable* and test point `CHANNEL_A`.
 3. Test the enable signal.
-	- Send a LOW to *A_OUT_EN* and make sure `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
-	- Send a HIGH to *A_OUT_EN* and make sure `OUT_A` and `CHANNEL_A` are nearly equal. If there is a voltage drop, record it.
+	- Run the Channel_A_Enable1.cpp file.
+	 	- Send a LOW to *A_OUT_EN* and make sure `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
+		- Send a HIGH to *A_OUT_EN* and make sure `OUT_A` and `CHANNEL_A` are nearly equal. If there is a voltage drop, record it.
 4. Remap all the duty cycle to output voltage.
-	- Redo the calculations for duty cycles to output voltage from the Channel A Transformer and Channel A HV/LV where the output voltage is measured at `CHANNEL_A` instead of from `FLY_OUT_A`.
-	- Make sure to get the 12V level measured!
-### Get the step 4 checked by cult cause we use feedback signal on section below. NVM it's needed for LCD screen!
+	- Run the Channel_A_Enable2.cpp file.
+ 		- Redo the calculations for duty cycles to output voltage from the Channel A Transformer and Channel A HV/LV where the output voltage is measured at `CHANNEL_A` instead of from `FLY_OUT_A`.
+		- Make sure to get the 12V level measured!
 
 ## Channel A Feedback
 1. This is to test the feedback signal from Channel A output.
