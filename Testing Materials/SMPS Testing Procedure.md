@@ -6,6 +6,7 @@
 		- Many components will be in *Common* if they don't have a dedicated *Group*, such as pull-up resistor.
 	- MCU pins will also be displayed as *MCU Pins*.
 	- Warning will be displayed as ***LIKE THIS***.
+- All measurements will be done with x100 probe.
 - For Assembly:
 	- Cut stencil up if feasible
 	- Assembly block by block from the *groups* according to the testing document.
