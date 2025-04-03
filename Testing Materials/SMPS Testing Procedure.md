@@ -134,7 +134,7 @@
 
 ## Channel A Current Sense
 1. This is to test the current sense.
-2. Solder on **C31, C32, C33, D10, D11, R25, R30** from the *Current Sense* and test points `OUT_A`.
+2. Solder on **C31, C32, C33, D10, D11, R25, R30** from the *Current Sense* and test point `OUT_A`.
 3. Connect a $100\Omega$ resistor between `OUT_A` and `A_GND`.
 4. Testing current sense.
 	- Set the transformer output voltage to be 18V, 12V, 6V.
@@ -142,14 +142,14 @@
 
 ## Channel A OVP
 1. This is for the OVP circuit.
-2. Solder on **D9, D12, D13, J4, Q13, Q15, Q44, R26, R27, R31, R33** from *OVP* and test points `A_PROT_OUT`.
+2. Solder on **D9, D12, D13, J4, Q13, Q15, Q44, R26, R27, R31, R33** from *OVP* and test point `A_PROT_OUT`.
 	- Place a 3A on the fuse holder, J4.
 3. Testing the voltage drop
 	- Record the voltage drop across `OUT_A` & `A_PROT_OUT` (should be approximately 0.7V).
 
 ## Channel A Enable
 1. This is testing Channel A enable.
-2. Solder on **Q17, Q19, R24, R37** from *Enable* and test points `CHANNEL_A`.
+2. Solder on **Q17, Q19, R24, R37** from *Enable* and test point `CHANNEL_A`.
 3. Test the enable signal.
 	- Send a LOW to *A_OUT_EN* and make sure `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
 	- Send a HIGH to *A_OUT_EN* and make sure `OUT_A` and `CHANNEL_A` are nearly equal. If there is a voltage drop, record it.
@@ -160,7 +160,7 @@
 
 ## Channel A Feedback
 1. This is to test the feedback signal from Channel A output.
-2. Solder on **D29, R67, R68, R69, U9** from *Feedback* and test points `A_SENSE_IN`.
+2. Solder on **D29, R67, R68, R69, U9** from *Feedback* and test point `A_SENSE_IN`.
 3. Test the feedback signal.
 	- Measure the feedback signal from the MCU, *A_VOL_SENSE*, map it to the calculated output voltage from the OpAmp circuit, and see how it compares to the actual `CHANNEL_A` output (should be accurate within 50mV).
 	- With this new mapping, the MCU should use *A_VOL_SENSE* as the actual voltage and adjust *A_DRIVE* (or *A_BUCK*) accordingly.
