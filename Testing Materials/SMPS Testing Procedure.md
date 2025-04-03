@@ -49,7 +49,7 @@
 2. Solder on **C1, C3, C4, C5, C12, D41, L1, L5, R94, U2** from the *LVDD* and test points for `A_GND`, `A_5V`.
 3. Check the `A_5V` rail.
 	- DC output on `A_5V` (ripple less than 200mV) & the red LED is ON.
-	- Verify `PRI_GND` & `A_GND` are isolated (using a voltmeter). If not, go to step 4.
+	- Verify `PRI_GND` & `A_GND` are isolated (using a ohmmeter). If not, go to step 4.
 	- If output is clean, can skip to step 6. If not, go to step 4.
 4. Desolder **C1, C3, C4, C5, C12, L1, L5** and solder on **R11, R12** from the *LVDD*.
 5. Check the `A_5V` rail.
@@ -97,17 +97,17 @@
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS***.
   			- Verify the frequency used has the expected VDC output, if not repeat with a different frequency increasing order of 10kHz.
 				- ***DO NOT GO ABOVE 50kHz!***.
-		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using a voltmeter).
+		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using a ohmmeter).
 		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
 		- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance after ***universal wait time*** and redo step 3.
 4. Record PWM duty cycle vs. VDC output.
 	- Run the Channel_A_Transformer2.cpp file.
-		- Measure the duty cycle from 21V to 9.5V in 0.10V intervals after waiting *time1* seconds.
+		- Measure the duty cycle from 21V to 9.5V in 0.10V intervals after waiting *time1* * 1.5 seconds.
 			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
 		- Some extra notes
 			- The 12V number will be used for LV circuit.
 			- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-			- The flyback transformer is expected to output 20V to 10V in normal operation. The 21V and 9.5V values helps to ensure that all boundary conditions are tested and an upper/lower duty cycle can be found for the firmware (+ to account for voltage drop).
+			- The flyback transformer is expected to output 20V to 10V in normal operation. The 21V and 9.5V values helps to ensure that all boundary conditions are tested and an upper/lower duty cycle can be found for the firmware (and to account for voltage drop).
 
 ## Channel A HV/LV 
 1. This is to test the HV & LV relays + buck converter.
