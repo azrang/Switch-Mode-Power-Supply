@@ -45,7 +45,7 @@
 # 2. Independent Channel A 
 ## Channel A LVDD
 1. This is to test the `A_5V` & `A_3V3` rail.
-2. Solder on **C1, C3, C4, C5, C12, D41, L5, R94, U2** from the *LVDD* and test points for `A_GND`, `A_5V`.
+2. Solder on **C1, C3, C4, C5, C12, D41, L1, L5, R94, U2** from the *LVDD* and test points for `A_GND`, `A_5V`.
 3. Check the `A_5V` rail.
 	- DC output on `A_5V` (ripple less than 200mV) & the red LED is ON.
 	- Verify `PRI_GND` & `A_GND` are isolated (using a voltmeter). If not, go to step 4.
