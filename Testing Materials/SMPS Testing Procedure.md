@@ -93,12 +93,13 @@
 2. Solder on **C24, C25, C26, T2, T4, Q29, Q35, Q38, Q39, R61, R70, R101** from the *Transformer* and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
 3. Check the flyback transformer outputs VDC.
 	- Run the Channel_A_Transformer1.cpp file.
-		- With the MCU, send a fixed PWM on *A_DRIVE* and record the VDC & record how long it takes for output to settle (call this *time1*).
+		- With the MCU, send a fixed PWM at 10kHz on *A_DRIVE* and record the VDC & record how long it takes for output to settle (call this *time1*).
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS***.
+  			- Verify the frequency used has the expected VDC output, if not repeat with a different frequency increasing order of 10kHz.
+				- ***DO NOT GO ABOVE 50kHz!***.
 		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using a voltmeter).
 		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
 		- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance after ***universal wait time*** and redo step 3.
-   		- Determine a good frequency and bit resolution for the PWM signal.
 5. Record PWM duty cycle vs. VDC output.
 	- Run the Channel_A_Transformer2.cpp file.
 		- Measure the duty cycle from 21V to 9.5V in 0.10V intervals after waiting *time1* seconds.
