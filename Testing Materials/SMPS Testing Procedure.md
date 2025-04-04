@@ -169,6 +169,7 @@
 	- Run the Channel_A_Enable1.cpp file.
 	 	- Send a LOW to *A_OUT_EN* and make sure `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
 		- Send a HIGH to *A_OUT_EN* and make sure `OUT_A` and `CHANNEL_A` are nearly equal. If there is a voltage drop, record it.
+	- Make sure the **C44** is discharged after the ***universal wait time***.
 4. Remap all the duty cycle to output voltage.
 	- Run the Channel_A_Enable2.cpp file.
  		- Determine the appropiate duty cycles needed for the flyback transformer & buck converter to output 1V - 20V at `CHANNEL_A`. 
@@ -183,26 +184,24 @@
 
 ## Channel A External Connections Part 2
 1. This is testing the input button for Channel A.
-2. Solder on external JST connectors for Channel A labelled **LCD_A, BUTTON_A, A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**, from the *External*.
+2. Solder on external JST connectors for Channel A labelled **A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**, from the *External*.
 3. Test to make sure these connections work.
-	- The LCD screen is on and is changing as appropriately.
-	- The pot inputs do adjust their respective voltage and current values to pins *A_V_KNOB* & *A_C_KNOB*.
-	- The button does send a HIGH signal to *A_BUTT*.
-	- The XT30 connector does have the same output as `CHANNEL_A`. 
-		- If the XT30 connector output has ripples, go to step 4, otherwise move onto the next section.
-4. Solder on **R62, C44**.
-	- Make sure the **C44** is discharged after the universal wait time.
+	- Run the Channel_A_Ext_Conn2.cpp file.
+		- The pot inputs do adjust their respective voltage (1V-20V) and current values (0A-3A) and it is displayed on the LCD screen.
+		- The XT30 connector does have the same output as `CHANNEL_A`. 
+			- If the XT30 connector output has ripples, increase the capacitance for **C44**, otherwise move onto the next section.
 
 ## Channel A Testing
 1. This is to make sure Channel A is working properly independently.
 2. Make sure the voltage can be set from 1V-20V.
 	- Set the voltage to 1V, 6V, 12V, 18V, 20V and that voltage appears at `CHANNEL_A` and the XT30 connector (no load).
 3. Make sure the current can be set from 0-3A.
-	- Set a current limit to 0.10A with the voltage to 6V and connect the output to a $100\Omega$ resistor to make sure the output current is correct.
-	- Set a current limit to 0.03A with the voltage to 6V and connect the output to a $100\Omega$ resistor to make sure the current limit turns on.
+	- Disconnect the fuse and connect an ammeter in series to make sure the output current matches the `CHANNEL_A` output current LCD screen reading.
+		- Set a current limit to 0.10A with the voltage to 6V and connect the output to a $100\Omega$ resistor to make sure the output current is correct.
+		- Set a current limit to 0.03A with the voltage to 6V and connect the output to a $100\Omega$ resistor to make sure the current limit turns on.
 3. Leave the power supply connected to a load for 30mins-60mins. 
 	- Make sure it is still working properly and there isn't any significant change (i.e. it doesn't become hot).
-4. MAKE SURE CURRENT IS WITHIN TOLERANCE, $\pm$ 0.01A
+4. MAKE SURE CURRENT IS WITHIN TOLERANCE, $\pm$ 0.01A. 
 
 # 2. Independent Channel B
 <u>Note:</u> This will be mostly identical to independent channel A except the refdes for the components will change to their channel B counterparts and some minor tweaks to the testing.
