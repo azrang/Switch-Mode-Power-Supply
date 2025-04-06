@@ -463,16 +463,13 @@
 ---
 # 4. Parallel Mode Testing
 ## Some Notes
-- Make sure to record all values and testing stuff now. This can be a destructive action
+- Make sure to record all values and testing stuff of previous sections now. This can be a destructive action
 - 
 
 ## 
 
 ---
 # 5. Series Mode Testing
-
-
-
-# ESP32 Scripts
-- Script 1: 
-	- what this does
+## Some Notes
+- Make sure to record all values and testing stuff of previous sections now. This can be a destructive action
+- 
