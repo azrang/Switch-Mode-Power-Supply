@@ -70,25 +70,21 @@
    		- The button itself also lit up the internal LED.
 
 ## Channel A Temperature Sensor
-1. This is to test the temperature sensor.
-2. Solder on **C37, R46, R47, U7**.
-3. Solder on $50k\Omega$ for **R54**.
-	- Run the Channel_A_Temp_Sense.cpp file.
-		- Make sure the temperature sensor sends HIGH to *A_TMP_SNSE* at room temperature with this displayed on the LCD.
-		- Make sure the temperature sensor sends a LOW signal with hot air gun at $55^{\circ}C$ (can set it up to $65^{\circ}C$) aimed at the temperature sensor and this is displayed on the LCD.
-			- The temperature sensor should go off at around $53^{\circ}C$.
-4. Determine what an appropriate resistor value for **R54** is to determine a temperature cut off.
-	- Few choices here. Recommend using a lower temperature threshold first before moving onto higher threshold. Note this resistor value (will be used for Channel B later on).
-		- $50k\Omega$ for $53^\circ C$ threshold
-		- $30k\Omega$ for $79^{\circ}C$ threshold
-		- $15k\Omega$ for $100^{\circ}C$ threshold
+1. Tested the temperature sensor.
+2. Soldered on **C37, R46, R47, U7**.
+3. Soldered on $51k\Omega$ for **R54**.
+	- Ran the Channel_A_Temp_Sense.cpp file.
+		- Used a hot air gun set at $100^{\circ}C$. Temperature sensor sent LOW to *A_TMP_SNSE* when the hot air gun was pointed at it. Temperature sensor sent HIGH in room temperature.
+		- The temperature sensor should go off at around $52^{\circ}C$.
+4. Finalized on a resistor value for **R54** is to determine a temperature cut off.
+	- $50k\Omega$ for $53^\circ C$ threshold.
 
 ## Channel A Transformers
-1. This is to test the flyback & feedback transformer.
-2. Solder on **C24, C25, C26, Q29, Q35, Q38, Q39, R61, R70, R101, T2, T4** and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
-3. Check the flyback transformer outputs VDC at `FLY_OUT_A`.
-	- Run the Channel_A_Transformer1.cpp file.
-		- With the MCU, send a fixed PWM at 10kHz with a duty cycle of 25% on *A_DRIVE* and record the VDC at `FLY_OUT_A` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
+1. Tested the flyback & feedback transformer.
+2. Soldered on **C24, C25, C26, Q29, Q35, Q38, Q39, R61, R70, R101, T2, T4** and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
+3. Checked the flyback transformer outputs VDC at `FLY_OUT_A`.
+	- Ran the Channel_A_Transformer1.cpp file.
+		- Sent a fixed PWM at 10kHz with a duty cycle of 25% on *A_DRIVE* and record the VDC at `FLY_OUT_A` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
 			- Verify the frequency used has the expected VDC output, if not, repeat with a different frequency in increasing order of 10kHz.
 				- Feel free to test in smaller increments like 5kHz, 1kHz, or 500Hz, but nothing smaller than 500Hz.
