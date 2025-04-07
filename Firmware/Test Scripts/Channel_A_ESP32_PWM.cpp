@@ -1,5 +1,5 @@
 // MCU Testing Script - Channel A ESP32
-// Channel_A_ESP32_PWM.cp
+// Channel_A_ESP32_PWM.cpp
 // Switch Mode Power Supply - Senior Projects
 // Azra Rangwala, Ilona Lameka, Ridwan Hussain
 
