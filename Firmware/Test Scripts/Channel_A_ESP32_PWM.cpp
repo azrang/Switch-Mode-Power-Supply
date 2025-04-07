@@ -4,11 +4,11 @@
 // Azra Rangwala, Ilona Lameka, Ridwan Hussain
 
 #include <Arduino.h>
-#include <LiquidCrystal_I2C.h>
 
 const int BUCK = 25; // MCU_A_GPIO25
 
 int PWM = 102; // 10% Duty Cycle
+int prevState = 0;
 
 void setup() 
 {
@@ -18,5 +18,9 @@ void setup()
 
 void loop() 
 {
+  if (!prevState)
+  {
     ledcWrite(0, PWM);
+    prevState = 1;
+  }
 }
