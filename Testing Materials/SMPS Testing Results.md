@@ -57,7 +57,7 @@
 
 ## Channel A External Connections Part 1
 1. This is testing the input button & LCD screen for Channel A.
-2. Solder on external JST connectors for Channel A labelled **LCD_A, BUTTON_A**.
+2. Solder on external JST connectors, **R5 & R7** for Channel A labelled **LCD_A, BUTTON_A**.
 3. Test to make sure these connections work.
 	- Run the Channel_A_Ext_Conn_1.cpp file.
 		- Check to make sure the input from Button A is read properly on the LCD screen.
