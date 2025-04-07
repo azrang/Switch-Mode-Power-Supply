@@ -48,12 +48,18 @@
 5. Determined the accuracy of PWM duty cycle & logical level shift voltage levels.
 	- Ran the Channel_A_ESP32_PWM.cpp file.
 		- The PWM was set to 10kHz with a 10% duty cycle. `BUCK_A_PWM` showed exactly 10% and `BUCK_A_nPWM` had 90%. The PWM from the ESP32 has an accurate duty cycle.
-		![Channel_A_Buck_PWM_Accuracy](Images/Channel_A_Buck_PWM_Accuracy.png)
-			- Logical level shifts between `A_GND` & `A_5V` for `BUCK_A_PWM` and`BUCK_A_nPWM`.
-   		 	![Channel_A_Buck_PWM](Images/Channel_A_Buck_PWM.png)
-     			![Channel_A_Buck_nPWM](Images/Channel_A_Buck_nPWM.png)
+		![Channel_A_Buck_PWM_Accuracy_10kHz](Images/Channel_A_Buck_PWM_Accuracy_10kHz.png)
+			- Logical level shifts between `A_GND` & `A_5V` for `BUCK_A_PWM` and`BUCK_A_nPWM` at 10kHz.
+   		 	![Channel_A_Buck_PWM_10kHz](Images/Channel_A_Buck_PWM_10kHz.png)
+     			![Channel_A_Buck_nPWM_10kHz](Images/Channel_A_Buck_nPWM_10kHz.png)
      
-		- Test was only run for 10kHz.
+	- Test was then run for 50kHz.
+		- The PWM was set to 50kHz with a 10% duty cycle. `BUCK_A_PWM` showed approximately 10% and `BUCK_A_nPWM` had 90%. The PWM is accurate also at 50kHz.
+		![Channel_A_Buck_PWM_Accuracy_50kHz](Images/Channel_A_Buck_PWM_Accuracy_50kHz.png)
+			- Logical level shifts between `A_GND` & `A_5V` for `BUCK_A_PWM` and`BUCK_A_nPWM` at 50kHz.
+   		 	![Channel_A_Buck_PWM_50kHz](Images/Channel_A_Buck_PWM_50kHz.png)
+     			![Channel_A_Buck_nPWM_50kHz](Images/Channel_A_Buck_nPWM_50kHz.png)
+     
 
 ## Channel A External Connections Part 1
 1. This is testing the input button & LCD screen for Channel A.
