@@ -62,11 +62,12 @@
      
 
 ## Channel A External Connections Part 1
-1. This is testing the input button & LCD screen for Channel A.
-2. Solder on external JST connectors, **R5 & R7** for Channel A labelled **LCD_A, BUTTON_A**.
-3. Test to make sure these connections work.
-	- Run the Channel_A_Ext_Conn_1.cpp file.
-		- Check to make sure the input from Button A is read properly on the LCD screen.
+1. Tested the input button & LCD screen for Channel A.
+2. Soldered on external JST connectors, **R5 & R7** for Channel A labelled **LCD_A, BUTTON_A**.
+3. Tesedt to make sure these connections work.
+	- Ran the Channel_A_Ext_Conn_1.cpp file.
+		- LCD correctly displayed BUTTON LOW or BUTTON HIGH depending on the button state.
+   		- The button itslef also lit up the internal LED.
 
 ## Channel A Temperature Sensor
 1. This is to test the temperature sensor.
