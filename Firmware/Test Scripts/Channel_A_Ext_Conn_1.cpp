@@ -23,14 +23,14 @@ void loop()
   if (!digitalRead(A_BUTT))
   {
     lcd.setCursor(0, 0);
-    lcd.print("Button LOW");
+    lcd.print("Button LOW    ");
     lcd.setCursor(0, 1);
     lcd.print("          ");
   }
   else
   {
     lcd.setCursor(0, 0);
-    lcd.print("Button HIGH");
+    lcd.print("Button HIGH  ");
     lcd.setCursor(0, 1);
     lcd.print("          ");
   }
