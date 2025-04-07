@@ -23,14 +23,14 @@ void loop()
   if (digitalRead(TEMP))
   {
     lcd.setCursor(0, 0);
-    lcd.print("Low Temp");
+    lcd.print("Low Temp     ");
     lcd.setCursor(0, 1);
     lcd.print("          ");
   }
   else
   {
     lcd.setCursor(0, 0);
-    lcd.print("Over Temp");
+    lcd.print("Over Temp     ");
     lcd.setCursor(0, 1);
     lcd.print("          ");
   }
