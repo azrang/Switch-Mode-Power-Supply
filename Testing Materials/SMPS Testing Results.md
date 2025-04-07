@@ -67,7 +67,7 @@
 3. Tesedt to make sure these connections work.
 	- Ran the Channel_A_Ext_Conn_1.cpp file.
 		- LCD correctly displayed BUTTON LOW or BUTTON HIGH depending on the button state.
-   		- The button itslef also lit up the internal LED.
+   		- The button itself also lit up the internal LED.
 
 ## Channel A Temperature Sensor
 1. This is to test the temperature sensor.
