@@ -53,7 +53,7 @@
    		 	![Channel_A_Buck_PWM](Images/Channel_A_Buck_PWM.png)
      			![Channel_A_Buck_nPWM](Images/Channel_A_Buck_nPWM.png)
      
-		- Test was only run for 50kHz.
+		- Test was only run for 10kHz.
 
 ## Channel A External Connections Part 1
 1. This is testing the input button & LCD screen for Channel A.
