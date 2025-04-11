@@ -89,9 +89,24 @@
 		- $15k\Omega$ for $100^{\circ}C$ threshold
 
 ## Channel A Transformers
-1. This is to test the flyback & feedback transformer.
-2. Solder on **C24, C25, C26, Q29, Q35, Q38, Q39, R61, R70, R101, T2, T4** and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
-3. Check the flyback transformer outputs VDC at `FLY_OUT_A`.
+1. This is to test the flyback & feedback transformer. 
+    - Note: This circuit needed some rework, so it WON'T be as simple as soldering on the components directly to the PCBs.
+2. Solder on the following circuits so that the feedback transformer can work (read the "SMPS Testing Results.md" to see why this is necessary). 
+    - Solder on a **$30k\Omega$** on the `UNREG_DC` **$24k\Omega$** on `PRI_GND`, creating a voltage division of 15.1V and a 10uF electrolytic capacitor at the voltage division. Can use the capacitor through hole mounts from **C7-C11** if they're available for the resistors.
+    - Solder on the **UCC5304DWV** to the board. Use enamel wire to connect:
+		- Pin 1: *A_DRIVE*
+   		- Pin 2 & 3: *A_5V*
+   		- Pin 4: *A_GND*
+   		- Pin 5 & 6: *PRI_GND*
+   		- Pin 7: the gate of Q29
+   		- Pin 8: The 15.1V line made from the voltage division.
+3. Test the new feedback transformer replacement circuit.
+    - Run the Channel_A_Transformer_Gate.cpp file.
+		- Verify there is 15.1V at this voltage division with little rippling.
+    	- Verify that the *A_DRIVE* circuit is outputting a PWM signal at 50kHz with a 25% duty cycle.
+     	- Verify that the gate of Q29, or pin 7 of the UCC5304DWV, is 50kHz 25% duty with a max voltage of 15.1V.
+4. Solder on **C24, C25, C26, Q29, Q38, Q39, R70, R101, T2** and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
+5. Check the flyback transformer outputs VDC at `FLY_OUT_A`.
 	- Run the Channel_A_Transformer1.cpp file.
 		- With the MCU, send a fixed PWM at 10kHz with a duty cycle of 25% on *A_DRIVE* and record the VDC at `FLY_OUT_A` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
@@ -101,10 +116,10 @@
 		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using an ohmmeter).
 		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
 		- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance after ***universal wait time*** and redo step 3.
-4. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_A`.
+6. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_A`.
 	- Edit and run the Channel_A_Transform1.cpp file.
 		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*. 
-5. Record PWM duty cycle vs. VDC output.
+7. Record PWM duty cycle vs. VDC output.
 	- Run the Channel_A_Transformer2.cpp file.
 		- Measure the output voltage, `FLY_OUT_A`, with the duty cycle sweeping across from *minimum duty cycle* & *maximum duty cycle* in the *percent accuracy* increments so the total interval is 50 seconds.
 			- To measure the full sweeping waveform: 
