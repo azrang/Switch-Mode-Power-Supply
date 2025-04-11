@@ -12,7 +12,7 @@ int lcdColumns = 16;
 int lcdRows = 2;
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
 
-int PWM = 307; // 30% Duty Cycle
+int PWM = 256; // 25% Duty Cycle
 int prevStateA = 0;
 
 void setup() 
@@ -20,7 +20,7 @@ void setup()
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
-  ledcSetup(0, 10000, 10); // Play around with frequency and resolution
+  ledcSetup(0, 50000, 10); // 50kHz
   ledcAttachPin(DRIVE, 0);
 }
 
