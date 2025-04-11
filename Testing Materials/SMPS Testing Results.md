@@ -79,32 +79,25 @@
 4. Finalized on a resistor value for **R54** is to determine a temperature cut off.
 	- $50k\Omega$ for $53^\circ C$ threshold.
 
+
 ## Channel A Transformers
-1. Tested the flyback & feedback transformer.
-2. Soldered on **C24, C25, C26, Q29, Q35, Q38, Q39, R61, R70, R101, T2, T4** and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
-3. Checked the flyback transformer outputs VDC at `FLY_OUT_A`.
+1. This is to test the flyback & feedback transformer. 
+2. Soldered on the following circuits so that the feedback transformer can work (read the "SMPS Testing Results.md" to see why this is necessary). 
+    - Soldered on a **$8.2k\Omega$** on the `UNREG_DC` **$6.8k\Omega$** on `PRI_GND`, creating a voltage division of 15.1V and a 10uF electrolytic capacitor at the voltage division.
+    - Soldered on the **UCC5304DWV** to the board. Use enamel wire to connect:
+		- Pin 1: *A_DRIVE*
+   		- Pin 2 & 3: *A_5V*
+   		- Pin 4: *A_GND*
+   		- Pin 5 & 6: *PRI_GND*
+   		- Pin 7: the gate of Q29
+   		- Pin 8: The 15.1V line made from the voltage division.
+3. Tested the new feedback transformer replacement circuit.
+    - Ran the Channel_A_Transformer_Gate.cpp file.
+		- 10-11V Output (Probably loading effect). PWM signal at 50kHz with a 25% duty cycle at 10V.
+4. Soldered on **C24, C25, C26, Q29, Q38, Q39, R70, R101, T2** and test points `FLY_OUT_A`, `PRI_FET_A` & `SEC_FET_A`.
 	- Ran the Channel_A_Transformer1.cpp file.
-		- Sent a fixed PWM at 10kHz with a duty cycle of 25% on *A_DRIVE* and record the VDC at `FLY_OUT_A` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
-			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
-			- Verify the frequency used has the expected VDC output, if not, repeat with a different frequency in increasing order of 10kHz.
-				- Feel free to test in smaller increments like 5kHz, 1kHz, or 500Hz, but nothing smaller than 500Hz.
-				- ***DO NOT GO ABOVE 50kHz!***
-		- Verify one last time that `PRI_GND` and `A_GND` are isolated from each other (using an ohmmeter).
-		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
-		- If the ripple is above 50mV, change the **C24, C25, C26** to a higher capacitance after ***universal wait time*** and redo step 3.
-4. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_A`.
-	- Edit and run the Channel_A_Transform1.cpp file.
-		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*. 
-5. Record PWM duty cycle vs. VDC output.
-	- Run the Channel_A_Transformer2.cpp file.
-		- Measure the output voltage, `FLY_OUT_A`, with the duty cycle sweeping across from *minimum duty cycle* & *maximum duty cycle* in the *percent accuracy* increments so the total interval is 50 seconds.
-			- To measure the full sweeping waveform: 
-				- Set the horizontal time div to 5s per block.
-				- Use the trigger function so the entire waveform is captured in a 50 second window.
-				- Measure each voltage by zooming into the horizontal waveform for each block or using a cursor.
-				- This procedure will be used multiple times and will be referred to as a *sweep measurement*.
-			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
-		- Some extra notes
-			- The flyback transformer is expected to output 20V to 10V in normal operation. 
-			- The 12V number will be used for LV circuit and WON'T change.
-			- These ***won't*** be the final numbers for the min and max duty cycle for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
+		- Smoke came out immediately, the `PRI_GND` copper exploded and continuity between the ground plane was gone. The 5V buck was also damaged. Also removed **Q29, Q38**.
+   		- Added a new buck and a `PRI_GND` wire. Circuit worked fine without running the PWM output.
+		- Added new **Q29, Q38** transistors and ran the script again. Smoke once again came from the thermistor and transformer. 12A fuse was blown. Circuit is pulling too much current.
+	- Also noticed that the previous PCB also had damage to the `PRI_GND` trace.
+		
