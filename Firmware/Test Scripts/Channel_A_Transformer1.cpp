@@ -12,7 +12,9 @@ int lcdColumns = 16;
 int lcdRows = 2;
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
 
-int PWM = 256; // 25% Duty Cycle
+// 15% = 153
+// 20% = 204
+int PWM = 204;
 int prevStateA = 0;
 
 void setup() 
