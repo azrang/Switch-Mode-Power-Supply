@@ -82,15 +82,18 @@
 
 ## Channel A Transformers
 1. This is to test the flyback & feedback transformer. 
-2. Soldered on the following circuits so that the feedback transformer can work (read the "SMPS Testing Results.md" to see why this is necessary). 
-    - Soldered on a **$8.2k\Omega$** on the `UNREG_DC` **$6.8k\Omega$** on `PRI_GND`, creating a voltage division of 15.1V and a 10uF electrolytic capacitor at the voltage division.
+    - An issue was found with the switching MOSFET **Q35** and its pull up resistor **R61**. Due to the low resistance of the feedback transformer, the output would never be pulled up to 5V through the **R61** resistor. To fix this, an isolated gate driver was purchased to replace **Q35, R61 & T4**. The isolated gate driver accepts the MCU PWM input and outputs it to the gate of **Q38** on the primary side.
+    	- The isolated gate driver has a noticable issue where the output voltage does not match the VDD provided on the primary side of the isolation. A significant voltage drop is noticed, which will need to be addressed.
+    - Another issue was noticed with the dot polarity of the transformer. The architecture for the flyback converter required opposing dot polarities, which were missed during the schematic phase of the project. To fix this, the pins for `SEC_FET_A` and `FLY_OUT_A` were swapped by soldering on jumper wires.
+2. Soldered on the following circuits so that the feedback transformer can work
+    - Soldered on a $8.2k\Omega$ on the `UNREG_DC` and a $6.8k\Omega$ on `PRI_GND`, creating a voltage division of 15.1V, along with a 10uF elecotrlytic capacitor at the voltage division.
     - Soldered on the **UCC5304DWV** to the board. Use enamel wire to connect:
-		- Pin 1: *A_DRIVE*
-   		- Pin 2 & 3: *A_5V*
-   		- Pin 4: *A_GND*
-   		- Pin 5 & 6: *PRI_GND*
-   		- Pin 7: the gate of Q29
-   		- Pin 8: The 15.1V line made from the voltage division.
+    	- Pin 1: `A_DRIVE`
+     	- Pin 2 & 3: `A_5V`
+      	- Pin 4: `A_GND`
+      	- Pin 5 & 6: `PRI_GND`
+      	- Pin 7: the gate of **Q29**
+      	- Pin 8: The 15.1V line made from the voltage division.
 3. Tested the new feedback transformer replacement circuit.
     - Ran the Channel_A_Transformer_Gate.cpp file.
 		- 10-11V Output (Probably loading effect). PWM signal at 50kHz with a 25% duty cycle at 10V.
