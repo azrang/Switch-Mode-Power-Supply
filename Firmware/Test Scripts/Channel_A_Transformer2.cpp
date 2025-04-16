@@ -16,6 +16,8 @@ int prevStateA = 0;
 
 void setup() 
 {
+  //Serial.begin (115200);
+  //Serial.println("MCU Restarting...");
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
@@ -25,16 +27,19 @@ void setup()
 
 void loop() 
 {
-  int PWM = 256; //10V starting point
+  int PWM = 102; // 10% starting point
   if (digitalRead(A_BUTT) && !prevStateA)
   {
-    lcd.setCursor(0, 0);
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; (i < 31 && digitalRead(A_BUTT)); i++)
     {
-      PWM += i*10; //Math to increase by voltage
+      PWM += 10; //Math to increase by voltage
+      lcd.setCursor(0, 0);
+      lcd.print(String("PWM: ") + String(PWM) + String("              "));
+      lcd.setCursor(0, 1);
+      lcd.print(String("I: ") + String(i) + String("                   "));
       ledcWrite(0, PWM);
-      delay(5000);
-      lcd.print(String("PWM: ") + String(PWM) + String("  "));
+      //Serial.println(PWM/1024.00);
+      delay(2000);
     }
     prevStateA = 1;
   }
@@ -43,6 +48,7 @@ void loop()
     ledcWrite(0, 0);
     lcd.setCursor(0, 0);
     lcd.print("PWM 0      ");
+    //Serial.println(String(0));
     prevStateA = 0;
   }
   delay(100);
