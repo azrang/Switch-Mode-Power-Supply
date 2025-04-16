@@ -11,10 +11,10 @@ const int DRIVE = 4; // MCU_A_GPIO4
 int lcdColumns = 16;
 int lcdRows = 2;
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
-
+// 10% = 102
 // 15% = 153
 // 20% = 204
-int PWM = 204;
+int PWM = 102;
 int prevStateA = 0;
 
 void setup() 
@@ -22,7 +22,7 @@ void setup()
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
-  ledcSetup(0, 50000, 10); // 50kHz
+  ledcSetup(0, 55000, 10); // 55kHz
   ledcAttachPin(DRIVE, 0);
 }
 
