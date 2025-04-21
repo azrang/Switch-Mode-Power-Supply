@@ -33,7 +33,7 @@ void loop()
     int PWM = 102; // 10% starting point
     if (digitalRead(A_BUTT) && !prevState)
     {
-      digitalWrite(HV_LV_OUT, 1);
+      digitalWrite(HV_LV_OUT, 0);
       for(int i = 0; (i <= 31 && digitalRead(A_BUTT)); i++)
       {
         lcd.setCursor(0, 0);
@@ -49,7 +49,7 @@ void loop()
     }
     else if(!digitalRead(A_BUTT))
     {
-      digitalWrite(HV_LV_OUT, 0);
+      digitalWrite(HV_LV_OUT, 1);
       ledcWrite(0, 0);
       lcd.setCursor(0, 0);
       lcd.print("PWM 0      ");
