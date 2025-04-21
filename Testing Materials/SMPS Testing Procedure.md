@@ -135,7 +135,7 @@
 
 ## Channel A HV/LV 
 1. This is to test the HV & LV relays + buck converter.
-2. Solder on **C23, D5, D6, K1, K2, L3, Q1, Q2, Q3, R21** and test points `OUT_A_HV`,`OUT_A_BUCK`, and `OUT_A_CURR`.
+2. Solder on **C23, D5, D6, K1, K2, L3, Q2, Q12, Q56, R21** and test points `OUT_A_HV`,`OUT_A_BUCK`, and `OUT_A_CURR`.
 3. Test HV side (through line).
 	- Run the Channel_A_HV_SW.cpp file.
 		- Send a LOW signal to *A_HV_LV_OUT*. 
@@ -150,7 +150,7 @@
 			- `OUT_A_HV` should be floating.
 		- Confirm `OUT_A_BUCK` and `OUT_A_CURR` are the expected voltage (around 6V $\pm$ 1V).
 			- If this isn't the case, move onto step 5. If it does work, move onto step 7.
-5. Desolder **Q1, Q3** and solder on **Q12, Q56** (these are on the back). 
+5. Desolder **Q12, Q56** and solder on **Q1, Q3** (these are on the back). 
 6. Run the tests from step 4 again.
 7. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
 	- Edit and run the Channel_A_LV_Buck1.cpp file.
