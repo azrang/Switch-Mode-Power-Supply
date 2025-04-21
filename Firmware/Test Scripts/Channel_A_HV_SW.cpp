@@ -18,6 +18,7 @@ void setup()
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
   pinMode(HV_LV_OUT, OUTPUT);
+  digitalWrite(HV_LV_OUT, 1);
 }
 
 void loop() 
