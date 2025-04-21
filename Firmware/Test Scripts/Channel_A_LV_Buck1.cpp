@@ -39,6 +39,7 @@ void loop()
     digitalWrite(HV_LV_OUT, 0);
     ledcWrite(0, 0);
     lcd.print("LOW HV_LV");
+    prevState = 0;
   }
   delay(100);
 }
