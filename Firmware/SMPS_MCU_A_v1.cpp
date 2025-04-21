@@ -148,7 +148,7 @@ void subway(void *pvParameters)
     {
       ledcWrite(0, 0); //Drive
       ledcWrite(1, 0); //Buck
-      digitalWrite(HV_LV_OUT, 0);
+      digitalWrite(HV_LV_OUT, 1);
       digitalWrite(OUT_ENABLE, 0);
       readKnobs();
       lcdScreen(vPotCalc, cPotCalc);
@@ -168,7 +168,7 @@ void subway(void *pvParameters)
         flyDrive(12);
         if (digitalRead(A_BUTT) && !interrupt)
         {
-          digitalWrite(HV_LV_OUT, 1);
+          digitalWrite(HV_LV_OUT, 0);
         }
         buckDrive();
       }
@@ -290,7 +290,7 @@ void death (void* pvParameters)
     ledcWrite(0, 0);
     ledcWrite(1, 0);
     digitalWrite(OUT_ENABLE, 0); 
-    digitalWrite(HV_LV_OUT, 0);
+    digitalWrite(HV_LV_OUT, 1);
     lcd.setCursor(0, 0);
     Serial.println("this again");
     switch(faultState)
