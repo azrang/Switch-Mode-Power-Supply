@@ -131,7 +131,7 @@
    		![buck_10khz_50duty_z](Images/buck_10khz_50duty_z.png)
 5. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
 	- Edit and run the Channel_A_LV_Buck1.cpp file.
-		- Based on the previous step, determine at what duty cycle 1V and 10V occurs at. Record these values as *9.75%* & *maximum buck duty cycle* or in terms of bit duty cycle (100 &).
+		- Based on the previous step, determine at what duty cycle 1V and 10V occurs at. Record these values as *9.75%* & 88.86%*maximum buck duty cycle* or in terms of bit duty cycle (100 & 910).
    		- There was a 0.375V peak-to-peak ripple on the 1V output.
 		- If the ripple for the output of the buck converter is significant (more than 1%), then replace the **C23** capacitor. 
 			- It might be necessary to use a 100uF/1mF through hole capacitor to get the voltage filtering desired.
