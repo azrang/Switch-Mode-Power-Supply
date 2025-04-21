@@ -108,12 +108,12 @@
    		- Added a new buck and a `PRI_GND` wire. Circuit worked fine without running the PWM output.
 		- Added new **Q29, Q38** transistors and ran the script again. Smoke once again came from the thermistor and transformer. 12A fuse was blown. Circuit is pulling too much current.
 	- Also noticed that the previous PCB also had damage to the `PRI_GND` trace.
-5. After multiple frequency and duty tests were ran it was found that as the switching frequency increases, the maximum `FLY_OUT_A` voltage decreases. This means that a "buzzing" sound is heard the higher the duty cycle is set to. However, the overall voltage ripple decreases as the frequency increases.
-   - A frequency of 42kHz was finalized for the transformer. The available duty cycles were also set to 10%-40% which translates to `FLY_OUT_A` voltages of 3.35V-18.78V. The minimum time delay between stepping up the duty cycle was determined to be 1% per 0.1s in the code, or 1% per 0.18s after measured on the oscilloscope.
+5. After multiple frequency and duty tests were ran it was found that as the switching frequency increases, the maximum `FLY_OUT_A` voltage decreases. This means that a "buzzing" sound is heard the higher the duty cycle is set to. However, the overall voltage ripple decreases as the frequency increases. By decreasing the frequency, the "buzzing" sound will be heard at a higher frequency.
+   - A frequency of 42kHz was finalized for the transformer after multiple tests were ran. The available duty cycles were also set to 10%-40% which translates to `FLY_OUT_A` voltages of 3.35V-18.78V. The minimum time delay between stepping up the duty cycle was determined to be 1% per 0.1s in the code, or 1% per 0.18s after measured on the oscilloscope.
   
 
 ## Channel A HV/LV 
-1. This is to test the HV & LV relays + buck converter.
+1. This is to test the HV & LV relays + buck converter on a bare board to confirm the buck converter circuit works.
 2. Soldered on **C23, D5, D6, K1, K2, L3, Q2, Q12, Q56, R21** and test points `OUT_A_HV`,`OUT_A_BUCK`, and `OUT_A_CURR`.
 3. Tested HV side (through line).
 	- Ran the Channel_A_HV_SW.cpp file.
@@ -126,11 +126,13 @@
 			- A high pitch buzzing sound was heard as soon as the relays switched and the buck converter was being used.
 		- Confirmed that `FLY_OUT_A` and `OUT_A_LV` are both 12V. 
 			- `OUT_A_HV` was floating.
-		- Confirmed `OUT_A_BUCK` and `OUT_A_CURR` were around 5.69V. There was a 10kHz ripple throughout the output, with a ripple of 1.1V.
-   ![buck_10khz_50duty_z](Images/buck_10khz_50duty_z.png)
+		- Confirmed `OUT_A_BUCK` and `OUT_A_CURR` were around 5.69V. There was a 10kHz ripple throughout the output, with a peak-to-peak of 1.1V.
+
+   		![buck_10khz_50duty_z](Images/buck_10khz_50duty_z.png)
 5. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
 	- Edit and run the Channel_A_LV_Buck1.cpp file.
-		- Based on the previous step, determine at what duty cycle 1V and 10V occurs at. Record these values as *minimum buck duty cycle* & *maximum buck duty cycle*. 
+		- Based on the previous step, determine at what duty cycle 1V and 10V occurs at. Record these values as *9.75%* & *maximum buck duty cycle* or in terms of bit duty cycle (100 &).
+   		- There was a 0.375V peak-to-peak ripple on the 1V output.
 		- If the ripple for the output of the buck converter is significant (more than 1%), then replace the **C23** capacitor. 
 			- It might be necessary to use a 100uF/1mF through hole capacitor to get the voltage filtering desired.
 	- Note: If the buck converter is not working properly, most of the voltage range can still be achieved by only using the flyback transformer (although the efficiency will be much worst compared to using a buck converter). 
@@ -141,4 +143,8 @@
 		- Some extra notes
 			- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
 			- The buck converter is expected to output 10V to 1V in normal operation. Be wary when the output voltage is at the lower range since the buck converter can operate strange in the lower voltage ends.
+
+
+
+   - issues: high ripple, high pitch noise
 		
