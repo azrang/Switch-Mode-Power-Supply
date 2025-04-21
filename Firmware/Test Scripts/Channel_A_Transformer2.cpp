@@ -13,6 +13,7 @@ int lcdRows = 2;
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
 
 int prevStateA = 0;
+int delayTime = 100;
 
 void setup() 
 {
@@ -21,7 +22,7 @@ void setup()
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
-  ledcSetup(0, 50000, 10); // Play around with frequency and resolution
+  ledcSetup(0, 42000, 10); // Play around with frequency and resolution
   ledcAttachPin(DRIVE, 0);
 }
 
@@ -30,16 +31,21 @@ void loop()
   int PWM = 102; // 10% starting point
   if (digitalRead(A_BUTT) && !prevStateA)
   {
-    for(int i = 0; (i < 31 && digitalRead(A_BUTT)); i++)
+    for(int i = 0; (i <= 31 && digitalRead(A_BUTT)); i++)
     {
-      PWM += 10; //Math to increase by voltage
       lcd.setCursor(0, 0);
       lcd.print(String("PWM: ") + String(PWM) + String("              "));
       lcd.setCursor(0, 1);
       lcd.print(String("I: ") + String(i) + String("                   "));
       ledcWrite(0, PWM);
-      //Serial.println(PWM/1024.00);
-      delay(2000);
+      //Serial.println(PWM);
+      PWM += 10; //Math to increase by voltage
+      //if (i > 20)
+      //{
+        //delayTime = 1000;
+      //}
+      delay(delayTime);
+      
     }
     prevStateA = 1;
   }
