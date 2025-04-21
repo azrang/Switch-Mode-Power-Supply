@@ -28,7 +28,7 @@ void loop()
 {
   if (digitalRead(A_BUTT) && !prevState)
   {
-    digitalWrite(HV_LV_OUT, 0);
+    digitalWrite(HV_LV_OUT, 1);
     delay(10);
     ledcWrite(0, 512);
     lcd.print("HIGH HV_LV");
