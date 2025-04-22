@@ -26,6 +26,7 @@ void setup()
   pinMode(HV_LV_OUT, OUTPUT);
   ledcSetup(0, 10000, 10); // Play around with frequency and resolution
   ledcAttachPin(BUCK, 0);
+  digitalWrite(HV_LV_OUT, 1);
 }
 
 void loop() 
