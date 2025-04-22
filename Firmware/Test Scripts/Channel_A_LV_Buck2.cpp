@@ -39,7 +39,7 @@ void loop()
   if (digitalRead(A_BUTT) && !prevState)
   {
     int drive_PWM = 102;
-    int buck_PWM = 100;
+    int buck_PWM = 910; //100 for increment 910 for dec
     for(int i = 0; (i <= 19 && digitalRead(A_BUTT)); i++)
     {
       
@@ -56,16 +56,20 @@ void loop()
     delay(10);
     lcd.setCursor(0, 0);
     lcd.print(String(drive_PWM-5) + String("                   "));
-    delay(1000);
+    delay(100);
     
+    ledcWrite(0, buck_PWM);
+    delay(1000);
     //Serial.println(PWM);
     digitalWrite(HV_LV_OUT, 0);
+    
     lcd.setCursor(0, 0);
     lcd.print("Buck                          ");
     lcd.setCursor(0, 1);
     lcd.print("                             ");
+    delay(1000);
 
-    for(int k = 0; (k <= 81 && digitalRead(A_BUTT)); k++)
+    for(int k = 0; (k <= 27 && digitalRead(A_BUTT)); k++)
     {
       lcd.setCursor(0, 0);
       lcd.print(String("Buck PWM: ") + String(buck_PWM) + String("              "));
@@ -73,8 +77,8 @@ void loop()
       lcd.print(String("K: ") + String(k) + String("                   "));
       ledcWrite(0, buck_PWM);
       Serial.println(buck_PWM);
-      buck_PWM += 10; //Math to increase by voltage
-      delay(100);
+      buck_PWM -= 30; //Math to increase by voltage
+      delay(200);
     }
     prevState = 1;
   }
