@@ -140,7 +140,7 @@
   	- New clean 12VDC 35kHz, 50% duty cycle results:
       ![buck_35khz_50dutypwm](Images/buck_35khz_50dutypwm.png)
      ![bbuck_35khz_50duty](Images/buck_35khz_50duty.png)
-8. Injected a noisy 12VDC input for the bare board with a 17.7V input through a 100mH inductor and a 800mV amplitude noisy waveform generator signal through a capacitor.
+8. Injected a noisy 12VDC input for the bare board with a 17.7V input through a 100mH inductor and a 800mV amplitude noisy waveform generator signal through a 30uF capacitor.
 9. Tested HV side (through line).
 10. Tested LV side (buck converter).
 11. Testing buck converter duty cycle vs. voltage output.
