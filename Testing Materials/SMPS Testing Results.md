@@ -113,28 +113,34 @@
   
 
 ## Channel A HV/LV 
-1. This is to test the HV & LV relays + buck converter on a bare board to confirm the buck converter circuit works.
+1. Tested the HV & LV relays + buck converter on a bare board.
 2. Soldered on **C23, D5, D6, K1, K2, L3, Q2, Q12, Q56, R21** and test points `OUT_A_HV`,`OUT_A_BUCK`, and `OUT_A_CURR`.
-3. Tested HV side (through line).
+3. Used a clean 12VDC input for the bare board.
+4. Tested HV side (through line).
 	- Ran the Channel_A_HV_SW.cpp file.
 		- Sent a LOW signal to *A_HV_LV_OUT*. 
 		- Relays switched and the input from `FLY_OUT_A` disappeared from `OUT_A_HV`. 
-4. Tested LV side (buck converter).
+5. Tested LV side (buck converter).
 	- Ran the Channel_A_LV_Buck1.cpp file.
 		- Sent a LOW signal to *A_HV_LV_OUT* with `FLY_OUT_A` set to 12VDC and *A_BUCK* is set to 50% duty cycle at 10kHz.
 			- Relays clicked as the *A_HV_LV_OUT* changed.
 			- A high pitch buzzing sound was heard as soon as the relays switched and the buck converter was being used.
 		- Confirmed that `FLY_OUT_A` and `OUT_A_LV` are both 12V. 
 			- `OUT_A_HV` was floating.
-		- Confirmed `OUT_A_BUCK` and `OUT_A_CURR` were around 5.69V. There was a 10kHz ripple throughout the output, with a peak-to-peak of 1.1V.
+		- Confirmed `OUT_A_BUCK` and `OUT_A_CURR` were around 5.69V. There was a 10kHz ripple throughout the output, with a peak-to-peak of 1.1V. High ripple had to be reduced.
 
    		![buck_10khz_50duty_z](Images/buck_10khz_50duty_z.png)
-5. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
+6. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
 	- Edit and run the Channel_A_LV_Buck1.cpp file.
 		- Based on the previous step, determine at what duty cycle 1V and 10V occurs at. Record these values as *9.75%* & 88.86%* maximum buck duty cycle or in terms of bit duty cycle (100 & 910).
    		- There was a 0.375V peak-to-peak ripple on the 1V output.
-		- 
-6. Testing buck converter duty cycle vs. voltage output.
+7. Made edits to reduce the overall ripple.
+ 	- Increased frequency to 35kHz from 10kHz for a lower ripple.
+	- Added $1k\Omega$ parallel resistor to **R17 & R18** to decrease overall resistance. Got a clearer PWM on 'BUCK_A_PWM' and 'BUCK_A_nPWM' which increased its duty cycle. This also reduced the ripple voltage.
+  	- New clean 12VDC 35kHz, 50% duty cycle results:
+      ![buck_35khz_50dutypwm](Images/buck_35khz_50dutypwm.png)
+     ![bbuck_35khz_50duty1](Images/buck_35khz_50duty1.png)
+9. Testing buck converter duty cycle vs. voltage output.
 	- Run the Channel_A_LV_Buck2.cpp file.
 		- Similar to the transformer, record the output voltage at `OUT_A_BUCK` with the duty cycle set from *minimum buck duty cycle* to *maximum buck duty cycle* in increments of *percent accuracy* so the total interval is 50 seconds and using the *sweep measurement*. 
 			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
@@ -144,5 +150,3 @@
 
 
 
-   - issues: high ripple, high pitch noise
-		
