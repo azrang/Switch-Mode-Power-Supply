@@ -150,7 +150,7 @@
 			- `OUT_A_HV` should be floating.
 		- Confirm `OUT_A_BUCK` and `OUT_A_CURR` are the expected voltage (around 6V $\pm$ 1V).
 			- If this isn't the case, move onto step 5. If it does work, move onto step 7.
-5. Desolder **Q12, Q56** and solder on **Q1, Q3** (these are on the back). 
+5. Desolder **Q12, Q56** and solder on **Q1, Q3**. 
 6. Run the tests from step 4 again.
 7. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
 	- Edit and run the Channel_A_LV_Buck1.cpp file.
