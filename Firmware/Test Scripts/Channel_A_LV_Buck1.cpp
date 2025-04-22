@@ -20,25 +20,28 @@ void setup()
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
   pinMode(HV_LV_OUT, OUTPUT);
-  ledcSetup(0, 10000, 10); // Play around with frequency and resolution
+  ledcSetup(0, 35000, 10); // Play around with frequency and resolution
   ledcAttachPin(BUCK, 0);
+  
 }
 
 void loop() 
 {
   if (digitalRead(A_BUTT) && !prevState)
   {
-    digitalWrite(HV_LV_OUT, 1);
+    digitalWrite(HV_LV_OUT, 0);
     delay(10);
     ledcWrite(0, 512);
-    lcd.print("HIGH HV_LV");
+    lcd.setCursor(0, 0);
+    lcd.print("LV BUCK               ");
     prevState = 1;
   }
   else if (!digitalRead(A_BUTT))
   {
-    digitalWrite(HV_LV_OUT, 0);
+    digitalWrite(HV_LV_OUT, 1);
     ledcWrite(0, 0);
-    lcd.print("LOW HV_LV");
+    lcd.setCursor(0, 0);
+    lcd.print("HV               ");
     prevState = 0;
   }
   delay(100);
