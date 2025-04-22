@@ -130,13 +130,13 @@
 		- Confirmed `OUT_A_BUCK` and `OUT_A_CURR` were around 5.69V. There was a 10kHz ripple throughout the output, with a peak-to-peak of 1.1V. High ripple had to be reduced.
 
    		![buck_10khz_50duty_z](Images/buck_10khz_50duty_z.png)
-6. Determine the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
+6. Determined the duty cycle needed for 1V, 10V at `OUT_A_BUCK`.
 	- Edited and ran the Channel_A_LV_Buck1.cpp file.
 		- Duty cycle 1V and 10V occurs: *9.75%* & 88.86%* maximum buck duty cycle or in terms of bit duty cycle (100 & 910).
    		- High ripple on the output voltages.
 7. Made edits to reduce the overall ripple.
  	- Increased frequency to 35kHz from 10kHz for a lower ripple.
-	- Added $1k\Omega$ parallel resistor to **R17 & R18** to decrease overall resistance. Got a clearer PWM on 'BUCK_A_PWM' and 'BUCK_A_nPWM' which increased its duty cycle. This also reduced the ripple voltage.
+	- Added $1k\Omega$ parallel resistor to **R17 & R18** to decrease overall resistance. Got a clearer PWM on `BUCK_A_PWM` and `BUCK_A_nPWM` which increased its duty cycle. This also reduced the ripple voltage.
   	- New clean 12VDC 35kHz, 50% duty cycle results:
       ![buck_35khz_50dutypwm](Images/buck_35khz_50dutypwm.png)
      ![bbuck_35khz_50duty](Images/buck_35khz_50duty.png)
