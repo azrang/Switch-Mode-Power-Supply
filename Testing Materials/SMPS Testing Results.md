@@ -140,10 +140,10 @@
   	- New clean 12VDC 35kHz, 50% duty cycle results:
       ![buck_35khz_50dutypwm](Images/buck_35khz_50dutypwm.png)
      ![bbuck_35khz_50duty](Images/buck_35khz_50duty.png)
-8. Injected a noisy 12VDC input for the bare board with a 17.7V input through a 100mH inductor and a 800mV amplitude noisy waveform generator signal through a 330uF capacitor. A $10k\Omega$ is connected to `OUT_A_CURR` and `A_GND`.
-9. Tested HV side (through line).
+8. Tested and assembled on actual board. Added the additional pull up resistors in parallel with **R17 & R18**
 10. Tested LV side (buck converter).
-11. Testing buck converter duty cycle vs. voltage output.
+    	- Ran the Channel_A_HV_SW.cpp file.
+12. Testing buck converter duty cycle vs. voltage output.
 	- Run the Channel_A_LV_Buck2.cpp file.
 		- Similar to the transformer, record the output voltage at `OUT_A_BUCK` with the duty cycle set from *minimum buck duty cycle* to *maximum buck duty cycle* in increments of *percent accuracy* so the total interval is 50 seconds and using the *sweep measurement*. 
 			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
