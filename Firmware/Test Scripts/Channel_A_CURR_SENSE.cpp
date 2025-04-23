@@ -62,7 +62,7 @@ void setup()
 void dominos (void* pvParameters) {
   for (;;) {
     readSense();
-    vTaskDelay(pdMS_TO_TICKS(5)); // Feeding the dog
+    vTaskDelay(pdMS_TO_TICKS(50)); // Feeding the dog
   }
 }
 
@@ -112,21 +112,25 @@ void subway(void *pvParameters)
   // FOR JUST BUCK
   if (digitalRead(A_BUTT) && !prevState)
     {
-      int buck_PWM = 910;
-      ledcWrite(0, buck_PWM);
-      lcd.setCursor(0, 1);
-      lcd.print(String("Buck:") + String(buck_PWM) + String("            "));
-
-      delay(1000);
       digitalWrite(HV_LV_OUT, 0);
+      delay(100);
+      for(int i = 0; (i <= 2 && digitalRead(A_BUTT)); i++)
+      {
+        int buck_PWMs[] = {910, 512, 100};
+        ledcWrite(0, buck_PWMs[i]);
+        //lcd.setCursor(0, 1);
+        //lcd.print(String("Buck:") + String(buck_PWMs[i]) + String("            "));
+        delay(5000);
+        
+      }
       prevState = 1;
     }
     else if (!digitalRead(A_BUTT))
     {
       digitalWrite(HV_LV_OUT, 1);
       ledcWrite(0, 0);
-      lcd.setCursor(0, 1);
-      lcd.print("No PWM                    ");
+      //lcd.setCursor(0, 1);
+      //lcd.print("No PWM                    ");
       prevState = 0;
     }
     vTaskDelay(pdMS_TO_TICKS(100));
