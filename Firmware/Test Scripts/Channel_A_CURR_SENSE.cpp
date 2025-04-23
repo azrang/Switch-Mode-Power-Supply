@@ -139,7 +139,14 @@ void subway(void *pvParameters)
 
 void readSense()
 {
-  int cSense = analogRead(CUR_SENSE);
+  int curr = 0;
+  int cTotal = 0;
+  for (int i = 0; i < 300; i++) // Getting muliple samples due to ADC fluctuations
+  {
+    cTotal += analogRead(CUR_SENSE);
+    vTaskDelay(pdMS_TO_TICKS(1));
+  }
+  int cSense = cTotal / 300; 
   lcd.setCursor(0, 0);
   lcd.print(String("Current:") + String(cSense) + String("          "));
 }
