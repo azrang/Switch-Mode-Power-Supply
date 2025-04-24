@@ -158,17 +158,17 @@
 	- Run the Channel_A_CURR_SENSE.cpp file (just using it to ignore the buck converter circuit).
   		- Injected voltage into `FLY_OUT_A`, probing `OUT_A` and `A_PROT_OUT` to see the result of OVP.
   
-   ## Channel A Enable
+## Channel A Enable
 1. Tested Channel A enable. (She Died)
 2. Soldered on **C44, Q17, Q19, R24, R37, R62** and test point `CHANNEL_A`.
    	- Problem was noticed with the circuit, **Q17** would have an improper $$V_{GS}$$. When the gate is driven low, the circuit operates correctly with no output voltage at `CHANNEL_A`. However, when the gate was driven high, the source would reach a higher voltage than the gate, effectively making the **Q17** fail as a switch since it is an NMOS. To solve this, a relay was soldered on to act as the switch instead of **Q17**.
-4. Tested the enable signal & voltage drop.
+3. Tested the enable signal & voltage drop.
 	- Ran the Channel_A_Enable1.cpp file.
 		- Sent a LOW to *A_OUT_EN*: `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
 		- Sent a HIGH to *A_OUT_EN*:`OUT_A` and `CHANNEL_A` are nearly equal. 
 			- Voltage drop across `FLY_OUT_A` and `CHANNEL_A`: 
 	- Make sure the **C44** is discharged after the ***universal wait time***.
-5. Remap all the duty cycle to output voltage.
+4. Remap all the duty cycle to output voltage.
 	- Run the Channel_A_Enable2.cpp file.
 		- Determine the appropriate duty cycles needed for the flyback transformer & buck converter to output 1V - 20V at `CHANNEL_A`. 
 			- Update the *minimum duty cycle*, *maximum duty cycle*, *minimum buck duty cycle*, and *maximum buck duty cycle*, but NOT the *LV duty cycle*.
