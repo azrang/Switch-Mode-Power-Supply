@@ -140,16 +140,42 @@
   	- New clean 12VDC 35kHz, 50% duty cycle results:
       ![buck_35khz_50dutypwm](Images/buck_35khz_50dutypwm.png)
      ![bbuck_35khz_50duty](Images/buck_35khz_50duty.png)
-8. Tested and assembled on actual board. Added the additional pull up resistors in parallel with **R17 & R18**
-10. Tested LV side (buck converter).
-    	- Ran the Channel_A_HV_SW.cpp file.
-12. Testing buck converter duty cycle vs. voltage output.
-	- Run the Channel_A_LV_Buck2.cpp file.
-		- Similar to the transformer, record the output voltage at `OUT_A_BUCK` with the duty cycle set from *minimum buck duty cycle* to *maximum buck duty cycle* in increments of *percent accuracy* so the total interval is 50 seconds and using the *sweep measurement*. 
-			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
-		- Some extra notes
-			- These ***won't*** be the final numbers used to associate output for Channel A and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-			- The buck converter is expected to output 10V to 1V in normal operation. Be wary when the output voltage is at the lower range since the buck converter can operate strange in the lower voltage ends.
+8. Tested and assembled on actual board. Added the additional pull up resistors in parallel with **R17 & R18**.
+9. Tested LV and HV side.
+ 	- There is a strong ripple after the buck starts driving the transformer input. Usually lasts for a maximum of 15 seconds and then settles to a lower ripple. Frequency does not affect the ripple time, nor does starting with a large voltage and decreasing or a low voltage and increasing the buck output voltage. It was found that 1% per 100ms is better  than 3% per 200ms for the buck PWM control. Based on how long the circuit was discharged for, the spikes last less.
+ 	 - Large ripple needs to be addressed, possibly snubbers, smaller caps etc.
+
+
+## Channel A Current Sense & OVP
+1. Tested the current sense & OVP circuit on a bare board. (She Died)
+2. Soldered on **C31, C32, C33, D9, D10, D11, D12, D13, J4, Q13, Q15, Q44, R25, R26, R27, R30, R31, R33** and test points `OUT_A` and `A_PROT_OUT`.
+3. Connected a $11.2\Omega$ 10W power resistor between `A_PROT_OUT` and `A_GND` and an ammeter between the fuse pins for **J4**.
+4. Tested the current sense.
+	- Ran the Channel_A_CURR_SENSE.cpp file.
+		- Recorded the ADC bit values compared to a multimeter measurement for voltages ranging from 1-20V. Mostly linear results, around 25mA tolerance on the accuracy of the current readings. (Expected 10mA accuracy).
+5. Tested the OVP circuit on a bare board. (She Died)
+ 	- Soldered a wire shorting **D9**.
+	- Run the Channel_A_CURR_SENSE.cpp file (just using it to ignore the buck converter circuit).
+  		- Injected voltage into `FLY_OUT_A`, probing `OUT_A` and `A_PROT_OUT` to see the result of OVP.
+  
+   ## Channel A Enable
+1. Tested Channel A enable. (She Died)
+2. Soldered on **C44, Q17, Q19, R24, R37, R62** and test point `CHANNEL_A`.
+   	- Problem was noticed with the circuit, **Q17** would have an improper $$V_{GS}$$. When the gate is driven low, the circuit operates correctly with no output voltage at `CHANNEL_A`. However, when the gate was driven high, the source would reach a higher voltage than the gate, effectively making the **Q17** fail as a switch since it is an NMOS. To solve this, a relay was soldered on to act as the switch instead of **Q17**.
+4. Tested the enable signal & voltage drop.
+	- Ran the Channel_A_Enable1.cpp file.
+		- Sent a LOW to *A_OUT_EN*: `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
+		- Sent a HIGH to *A_OUT_EN*:`OUT_A` and `CHANNEL_A` are nearly equal. 
+			- Voltage drop across `FLY_OUT_A` and `CHANNEL_A`: 
+	- Make sure the **C44** is discharged after the ***universal wait time***.
+5. Remap all the duty cycle to output voltage.
+	- Run the Channel_A_Enable2.cpp file.
+		- Determine the appropriate duty cycles needed for the flyback transformer & buck converter to output 1V - 20V at `CHANNEL_A`. 
+			- Update the *minimum duty cycle*, *maximum duty cycle*, *minimum buck duty cycle*, and *maximum buck duty cycle*, but NOT the *LV duty cycle*.
+		- NOTE: The circuit should switch from HV to LV when the voltage at `CHANNEL_A` reads 10V, not when `FLY_OUT_A` 10V. 
+
+		- OVP was triggered when `FLY_OUT_A` was set to 22.05V.
+		- Voltage drop between `OUT_A` and `A_PROT_OUT` was around 100mV without OVP triggered.
 
 
 
