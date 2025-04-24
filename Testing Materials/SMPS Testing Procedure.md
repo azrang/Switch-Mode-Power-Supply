@@ -168,7 +168,7 @@
 
 ## Channel A Current Sense & OVP
 1. This is to test the current sense & OVP circuit.
-2. Solder on **C31, C32, C33, D9, D10, D11, D12, D13, J4, Q13, Q15, Q44, R25, R26, R27, R30, R31, R33** and test points `OUT_A` and `A_PROT_OUT`.
+2. Solder on **C31, C32, C33, D9, D10, D11, D12, D13, D39, J4, Q13, Q15, Q44, R25, R26, R27, R30, R31, R33, R92** and test points `OUT_A` and `A_PROT_OUT`.
 3. Connect a $100\Omega$ resistor between `A_PROT_OUT` and `A_GND` and an ammeter between the fuse pins for **J4**.
 4. Testing the current sense.
 	- Run the Channel_A_CURR_SENSE.cpp file.
