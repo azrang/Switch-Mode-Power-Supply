@@ -59,7 +59,6 @@ void subway(void *pvParameters)
       else if (!digitalRead(A_BUTT))
       {
         digitalWrite(OUT_ENABLE, 0);
-        ledcWrite(0, 0);
         prevState = 0;
       }
     vTaskDelay(pdMS_TO_TICKS(100));
