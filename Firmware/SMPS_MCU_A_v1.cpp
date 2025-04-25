@@ -337,6 +337,7 @@ void death (void* pvParameters)
 
 // fix math
 // add a min and max duty cycle clamping
+// soft start 
 
 // Controls the Flyback PWM signals
 void flyDrive(float vComp) 
@@ -360,6 +361,7 @@ void flyDrive(float vComp)
 }
 
 // Controls the Buck Converter PWM signals
+//soft start
 void buckDrive() 
 {
   if (gbl_prevStateA == 0)
