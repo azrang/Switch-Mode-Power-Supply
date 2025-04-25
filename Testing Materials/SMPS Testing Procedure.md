@@ -5,6 +5,7 @@
 	- MCU pins will also be displayed as *MCU Pins*.
 	- Warning will be displayed as ***LIKE THIS***.
 - All measurements will be done with 100x probe.
+  	- There will be a consistent 450mV drop compared to the oscilloscope and digital multimeter readings.
 - For Assembly, cut stencil up based on assembly order:
 	- ***IF INTERACTING WITH LIVE CIRCUIT, WEAR HIGH VOLTAGE GLOVES***
 - ***MINIMIZE*** the amount of interactions you have with live circuits and be wary of ***ARCS***.
