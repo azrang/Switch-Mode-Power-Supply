@@ -20,8 +20,7 @@ int lcdColumns = 16;
 int lcdRows = 2;
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
 
-float vSenseCalc, cSenseCalc; //set to 0?
-int stateA, drivePWM, buckPWM;
+float cSenseCalc; //set to 0?
 int prevState = 0;
 
 TaskHandle_t domTaskHandle = NULL;
@@ -37,10 +36,10 @@ void setup()
   pinMode(A_BUTT, INPUT);
 
   ledcSetup(0, 75000, 10); 
-  ledcAttachPin(BUCK, 1);
+  ledcAttachPin(BUCK, 0);
 
   ledcSetup(1, 42000, 10);
-  ledcAttachPin(DRIVE, 0);
+  ledcAttachPin(DRIVE, 1);
 
   pinMode(HV_LV_OUT, OUTPUT);
 
@@ -74,23 +73,26 @@ void subway(void *pvParameters)
     if (digitalRead(A_BUTT) && !prevState)
     {
       int drive_PWM = 102;
-      int buck_PWM = 100;
+      int buck_PWM = 100; //100 for increment 910 for dec
       for(int i = 0; (i <= 19 && digitalRead(A_BUTT)); i++)
-    {
-      ledcWrite(1, drive_PWM);
-      drive_PWM += 10; //Math to increase by voltage
-      vTaskDelay(pdMS_TO_TICKS(100)); 
-    }
-
+      {
+        ledcWrite(1, drive_PWM);
+        drive_PWM += 10; //Math to increase by voltage
+        delay(100); 
+      }
+      ledcWrite(1, drive_PWM-5); //297 is 12V
+      delay(100);
+      
       ledcWrite(0, buck_PWM);
-      vTaskDelay(pdMS_TO_TICKS(100)); 
+      delay(1000);
       digitalWrite(HV_LV_OUT, 0);
-      vTaskDelay(pdMS_TO_TICKS(15000)); 
-      for(int k = 0; (k <= 41 && digitalRead(A_BUTT)); k++)
+      delay(15000);
+
+      for(int k = 0; (k <= 81 && digitalRead(A_BUTT)); k++)
       {
         ledcWrite(0, buck_PWM);
-        buck_PWM += 20; //Math to increase by voltage
-        vTaskDelay(pdMS_TO_TICKS(7000));
+        buck_PWM += 10; //Math to increase by voltage
+        delay(7000);
       }
       prevState = 1;
     }
@@ -101,7 +103,7 @@ void subway(void *pvParameters)
       ledcWrite(0, 0);
       prevState = 0;
     }
-    vTaskDelay(pdMS_TO_TICKS(100)); 
+    delay(100);
   
   /*
   // FOR JUST BUCK
