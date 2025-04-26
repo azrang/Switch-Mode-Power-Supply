@@ -157,6 +157,8 @@
  	- Soldered a wire shorting **D9**.
 	- Run the Channel_A_CURR_SENSE.cpp file (just using it to ignore the buck converter circuit).
   		- Injected voltage into `FLY_OUT_A`, probing `OUT_A` and `A_PROT_OUT` to see the result of OVP.
+ 		- OVP was triggered when `FLY_OUT_A` was set to 22.05V.
+		- Voltage drop between `OUT_A` and `A_PROT_OUT` was around 100mV without OVP triggered.
   
 ## Channel A Enable
 1. Tested Channel A enable. (She Died)
@@ -166,16 +168,30 @@
 	- Ran the Channel_A_Enable1.cpp file.
 		- Sent a LOW to *A_OUT_EN*: `OUT_A` is giving a VDC output, but `CHANNEL_A` is low.
 		- Sent a HIGH to *A_OUT_EN*:`OUT_A` and `CHANNEL_A` are nearly equal. 
-			- Voltage drop across `FLY_OUT_A` and `CHANNEL_A`: 
-	- Make sure the **C44** is discharged after the ***universal wait time***.
-4. Remap all the duty cycle to output voltage.
-	- Run the Channel_A_Enable2.cpp file.
-		- Determine the appropriate duty cycles needed for the flyback transformer & buck converter to output 1V - 20V at `CHANNEL_A`. 
-			- Update the *minimum duty cycle*, *maximum duty cycle*, *minimum buck duty cycle*, and *maximum buck duty cycle*, but NOT the *LV duty cycle*.
-		- NOTE: The circuit should switch from HV to LV when the voltage at `CHANNEL_A` reads 10V, not when `FLY_OUT_A` 10V. 
+			- Voltage drop across `FLY_OUT_A` and `CHANNEL_A`: 50mV-100mV
+	- Make sure the **C44** is discharged after the ***5s***.
 
-		- OVP was triggered when `FLY_OUT_A` was set to 22.05V.
-		- Voltage drop between `OUT_A` and `A_PROT_OUT` was around 100mV without OVP triggered.
+## Channel A Feedback
+1. This is to test the feedback signal from Channel A output.
+2. Solder on **D29, R67, R68, R69, U9** and test point `A_SENSE_IN`.
+3. Test the feedback signal.
+	- Run the Channel_A_Feedback.cpp file.
+		- Map the output voltages measured at `A_PROT_OUT` to the ADC readings (displayed on the LCD screen) at 1V intervals. 
+		- Make a line of best fit to determine the relationship between ADC reading and voltage output.
+	- With this new mapping, the MCU should use *A_VOL_SENSE* as the actual voltage and adjust *A_DRIVE* (or *A_BUCK*) accordingly.
+
+## Channel A External Connections Part 2
+1. This is testing the input potentiometer & XT30 connector for `CHANNEL_A`.
+2. Solder on external JST connectors for Channel A labelled **A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**.
+3. Test to make sure the potentiometers work.
+	- Run the Channel_A_Ext_Conn2.cpp file.
+		- The pot inputs do adjust their respective voltage (1V-20V) and current values (0A-3A) and it is displayed on the LCD screen.
+4. Test to make sure the `CHANNEL_A` XT30 connector works.
+	- Run the Channel_A_Ext_Conn3.cpp file.
+		- Set the `CHANNEL_A` output to be 1V, 6V, 12V, and 20V. 
+		- Measure the `CHANNEL_A` output at the end of the XT30 connector and verify the ripple is below 20mV. 
+			- If the ripple is greater than 20mV, increase the capacitance for **C44** and test again.
+		
 
 
 
