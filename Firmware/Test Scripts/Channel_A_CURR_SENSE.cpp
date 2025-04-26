@@ -76,20 +76,21 @@ void subway(void *pvParameters)
       int drive_PWM = 102;
       int buck_PWM = 100;
       for(int i = 0; (i <= 19 && digitalRead(A_BUTT)); i++)
-      {
-        ledcWrite(1, drive_PWM);
-        drive_PWM += 10; 
-        delay(100); 
-      }
+    {
+      ledcWrite(1, drive_PWM);
+      drive_PWM += 10; //Math to increase by voltage
+      vTaskDelay(pdMS_TO_TICKS(100)); 
+    }
+
       ledcWrite(0, buck_PWM);
-      delay(100);
+      vTaskDelay(pdMS_TO_TICKS(100)); 
       digitalWrite(HV_LV_OUT, 0);
-      delay(15000);
+      vTaskDelay(pdMS_TO_TICKS(15000)); 
       for(int k = 0; (k <= 41 && digitalRead(A_BUTT)); k++)
       {
         ledcWrite(0, buck_PWM);
         buck_PWM += 20; //Math to increase by voltage
-        delay(7000);
+        vTaskDelay(pdMS_TO_TICKS(7000));
       }
       prevState = 1;
     }
