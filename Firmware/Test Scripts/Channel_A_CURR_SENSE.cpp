@@ -36,7 +36,7 @@ void setup()
 
   pinMode(A_BUTT, INPUT);
 
-  ledcSetup(0, 35000, 10);
+  ledcSetup(0, 75000, 10); 
   ledcAttachPin(BUCK, 1);
 
   ledcSetup(1, 42000, 10);
@@ -70,45 +70,39 @@ void subway(void *pvParameters)
 {
   for (;;)
   {
-    /* FOR TRANSFORMER AND BUCK
+    // For Transformer AND Buck
     if (digitalRead(A_BUTT) && !prevState)
     {
-      int drive_PWM = 97;
-      int buck_PWM = 910;
+      int drive_PWM = 102;
+      int buck_PWM = 100;
       for(int i = 0; (i <= 19 && digitalRead(A_BUTT)); i++)
       {
-        
-        lcd.setCursor(0, 1);
-        lcd.print(String("PWM: ") + String(drive_PWM) + String("              "));
         ledcWrite(1, drive_PWM);
-        Serial.println(drive_PWM);
         drive_PWM += 10; 
         delay(100); 
       }
-
       ledcWrite(0, buck_PWM);
-      lcd.setCursor(0, 1);
-      lcd.print(String("Buck:") + String(buck_PWM) + String("            "));
-
-      delay(1000);
+      delay(100);
       digitalWrite(HV_LV_OUT, 0);
-      
-      
+      delay(15000);
+      for(int k = 0; (k <= 41 && digitalRead(A_BUTT)); k++)
+      {
+        ledcWrite(0, buck_PWM);
+        buck_PWM += 20; //Math to increase by voltage
+        delay(7000);
+      }
       prevState = 1;
-
     }
     else if (!digitalRead(A_BUTT))
     {
       ledcWrite(1, 0);
-    digitalWrite(HV_LV_OUT, 1);
-    ledcWrite(0, 0);
-    lcd.setCursor(0, 1);
-    lcd.print("No PWM                    ");
-    prevState = 0;
+      digitalWrite(HV_LV_OUT, 1);
+      ledcWrite(0, 0);
+      prevState = 0;
     }
-    vTaskDelay(pdMS_TO_TICKS(100)); */
+    vTaskDelay(pdMS_TO_TICKS(100)); 
   
-
+  /*
   // FOR JUST BUCK
   if (digitalRead(A_BUTT) && !prevState)
     {
@@ -118,8 +112,6 @@ void subway(void *pvParameters)
       {
         int buck_PWMs[] = {910, 512, 100};
         ledcWrite(0, buck_PWMs[i]);
-        //lcd.setCursor(0, 1);
-        //lcd.print(String("Buck:") + String(buck_PWMs[i]) + String("            "));
         delay(5000);
         
       }
@@ -129,11 +121,9 @@ void subway(void *pvParameters)
     {
       digitalWrite(HV_LV_OUT, 1);
       ledcWrite(0, 0);
-      //lcd.setCursor(0, 1);
-      //lcd.print("No PWM                    ");
       prevState = 0;
     }
-    vTaskDelay(pdMS_TO_TICKS(100));
+    vTaskDelay(pdMS_TO_TICKS(100)); */
   }
 }
 
