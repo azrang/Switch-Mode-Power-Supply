@@ -173,16 +173,19 @@
 			- Voltage drop across `FLY_OUT_A` and `CHANNEL_A`: 50mV-100mV
 	- Make sure the **C44** is discharged after the ***5s***.
 4. Tested Channel A enable on real board.
-5. Soldered on the relay circuit.
+5. Soldered on the relay circuit, worked.
 
 ## Channel A Feedback
 1. This is to test the feedback signal from Channel A output.
 2. Solder on **D29, R67, R68, R69, U9** and test point `A_SENSE_IN`.
 3. Test the feedback signal.
-	- Run the Channel_A_Feedback.cpp file.
-		- Map the output voltages measured at `A_PROT_OUT` to the ADC readings (displayed on the LCD screen) at 1V intervals. 
-		- Make a line of best fit to determine the relationship between ADC reading and voltage output.
-	- With this new mapping, the MCU should use *A_VOL_SENSE* as the actual voltage and adjust *A_DRIVE* (or *A_BUCK*) accordingly.
+	- Ran the Channel_A_Feedback.cpp file. Voltage_Feedback
+		- Mapped the output voltages measured at `A_PROT_OUT` to the ADC readings (displayed on the LCD screen).
+  - ![Voltage_Feedback](Voltage_Feedback.png)
+
+
+
+
 
 ## Channel A External Connections Part 2
 1. This is testing the input potentiometer & XT30 connector for `CHANNEL_A`.
