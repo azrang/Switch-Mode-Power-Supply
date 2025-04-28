@@ -39,6 +39,7 @@ void setup()
 
   pinMode(HV_LV_OUT, OUTPUT);
   pinMode(OUT_ENABLE, OUTPUT);
+  digitalWrite(HV_LV_OUT, 1); //have this be off somehwere
 
   // False Start Prevention
   if (digitalRead(A_BUTT))
@@ -57,6 +58,7 @@ void setup()
 
 void dominos (void* pvParameters) {
   for (;;) {
+    int f1 = 4 + 4;
     vTaskDelay(pdMS_TO_TICKS(50)); // Feeding the dog
   }
 }
@@ -68,9 +70,9 @@ void subway(void *pvParameters)
     if (!once)
     {
       delay(5000);
-      int drive_PWM = 512;
-      int buck_PWM = 100; //100 for increment 910 for dec
-      for(int i = 0; (i <= 19 && digitalRead(A_BUTT)); i++)
+      int drive_PWM = 102; // DO NOT CHANGE
+      int buck_PWM = 512; //100 for increment 910 for dec
+      for(int i = 0; (i <= 19); i++)
       {
         ledcWrite(1, drive_PWM);
         drive_PWM += 10; //Math to increase by voltage
@@ -80,7 +82,7 @@ void subway(void *pvParameters)
       delay(10000);
       
       ledcWrite(0, buck_PWM);
-      delay(2000);
+      delay(1000);
       digitalWrite(HV_LV_OUT, 0);
       once = 1;
     }
