@@ -5,9 +5,10 @@
 
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
+#include <Wire.h>
 
 const int A_BUTT = 23; // MCU_B_GPIO23
-const int DRIVE = 27; // MCU_B_GPIO27
+const int DRIVE = 19; // MCU_B_GPIO27
 int lcdColumns = 16;
 int lcdRows = 2;
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
@@ -16,7 +17,7 @@ int prevStateA = 0;
 
 void setup() 
 {
-
+  Wire.begin(27, 22); //changing SDA pin from 21 -> 27 because of coupling with DRIVE
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
@@ -37,7 +38,7 @@ void loop()
       lcd.print(String("I: ") + String(i) + String("                   "));
       ledcWrite(0, PWM);
       PWM += 10; //Math to increase by voltage
-      delay(1000);
+      delay(100);
     }
     prevStateA = 1;
   }
