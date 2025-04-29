@@ -82,12 +82,12 @@
 
 ## Channel A Transformers
 1. This is to test the flyback & feedback transformer. 
-    - An issue was found with the switching MOSFET **Q35** and its pull up resistor **R61**. Due to the low resistance of the feedback transformer, the output would never be pulled up to 5V through the **R61** resistor. To fix this, an isolated gate driver was purchased to replace **Q35, R61 & T4**. The isolated gate driver accepts the MCU PWM input and outputs it to the gate of **Q38** on the primary side.
+    - An issue was found with the switching MOSFET **Q35** and its pull up resistor **R61**. Due to the low resistance of the feedback transformer, the output would never be pulled up to 5V through the **R61** resistor. To fix this, an isolated gate driver (UCC5304DWV) was purchased to replace **Q35, R61 & T4**. The isolated gate driver accepts the MCU PWM input and outputs it to the gate of **Q38** on the primary side.
     	- The isolated gate driver has a noticable issue where the output voltage does not match the VDD provided on the primary side of the isolation. A significant voltage drop is noticed, which will need to be addressed.
     - Another issue was noticed with the dot polarity of the transformer. The architecture for the flyback converter required opposing dot polarities, which were missed during the schematic phase of the project. To fix this, the pins for `SEC_FET_A` and `FLY_OUT_A` were swapped by soldering on jumper wires.
     - Snubbers were also added to **Q29 & Q38**. Both transistors got a capacitor and resistor across their drain and source pins. **Q38** had a resistor of $22\Omega$ and a capacitor of 680pF, while **Q29** had a resistor of $15\Omega$ and capacitor of 680pF. The snubbers were found on an online [Snubber Calculator](https://biricha.com/tools-and-downloads/flyback-rc-snubber-design/).
     - We also changed the pull up resistor **R70** from $1k \Omega$ to $150 \Omega$.
-    - The filter capacitors on `FLY_OUT_A` were also changed to three 470uF, a 1uF and a 47nF capacitors.
+    - The filter capacitors on `FLY_OUT_A` were also changed to three 470uF, a 1uF and a 47nF capacitors. After numerous testing, the finalized values for the capacitors were 10pF + 100pF + 47nF + 1uF + 470uF + 1mF + 2.2mF.
     - After multiple fuses being blown when attempting to reach a higher output voltage on `FLY_OUT_A`, it was found that a "soft start" is required, where we begin with a lower duty cycle and transition to a higher one after a certain time delay.
     - New ways of verifying damaged components were found, such as tests for transformers, MOSFETs, and ISO driver.
 2. Soldered on the following circuits so that the feedback transformer can work.
@@ -181,7 +181,7 @@
 3. Test the feedback signal.
 	- Ran the Channel_A_Feedback.cpp file. Voltage_Feedback
 		- Mapped the output voltages measured at `A_PROT_OUT` to the ADC readings (displayed on the LCD screen).
-  - ![Voltage_Feedback](Voltage_Feedback.png)
+  - ![Voltage_Feedback](Images/Voltage_Feedback.png)
 
 ## Channel B LVDD
 1. Tested the `B_5V` & `B_3V3` rail.
@@ -192,6 +192,59 @@
 4. Soldered on **C18, D43, U3, R96** & test point for `B_3V3`.
 5. Checked the `B_3V3` rail.
 	- The red LED is ON.
+
+## Channel B ESP32
+1. This is to test the ESP32 is powered on. 
+2. Solder on **J10, J11**, or the header pins for the ESP32 MCU B.
+3. Place the ESP32 on following the orientation on the board.
+	- Verify the LED on the ESP32 module turns on.
+4. Solder on **Q6, Q8, R19, R20** and test points `BUCK_B_nPWM`, `BUCK_B_PWM`, & `OUT_B_LV`
+   	- Added $1k\Omega$ parallel resistor to **R19 & R20** to decrease overall resistance..
+6. Determine the accuracy of PWM duty cycle & logical level shift voltage levels.
+	- Run the Channel_B_ESP32_PWM.cpp file.
+		- Connect the `OUT_B_LV` to `B_5V` & measure this voltage.
+		- Set the PWM to 10kHz with 10% duty cycle and measure how accurate the duty cycle is on the `BUCK_B_PWM` and `BUCK_B_nPWM` (should be 1 - duty cycle) & record the difference. This accuracy will be denoted as the *percent accuracy*.
+			- Make sure that the logical levels for these circuits switches between `B_GND` & `B_5V`. 
+		- Run these tests again in increasing order of 10kHz until you reach 50kHz and measure the *percent accuracy* for each frequency.
+
+## Channel B External Connections Part 1
+1. This is testing the input button & LCD screen for Channel B.
+2. Solder on external JST connectors for Channel B labelled **LCD_B, BUTTON_B** and **Q34, R6, R8**.
+3. Test to make sure these connections work.
+	- Run the Channel_B_Ext_Conn_1.cpp file.
+		- Check to make sure the input from Button B is read properly on the LCD screen.
+
+## Channel B Temperature Sensor
+1. This is to test the temperature sensor.
+2. Solder on **C38, R59, R60, U8**.
+3. Solder on $51k\Omega$ for **R66**.
+	- Run the Channel_B_Temp_Sense.cpp file.
+		- Make sure the temperature sensor sends HIGH to *B_TMP_SNSE* at room temperature with this displayed on the LCD.
+		- Make sure the temperature sensor sends a LOW signal with hot air gun at $55^{\circ}C$ (can set it up to $65^{\circ}C$) aimed at the temperature sensor and this is displayed on the LCD.
+			- The temperature sensor should go off at around $53^{\circ}C$.
+
+
+## Channel B Transformers
+1. This is to test the flyback & feedback transformer.
+2. Solder on **Q40, Q41, Q48, R102, T3** and test points `FLY_OUT_B`, `PRI_FET_B` & `SEC_FET_B` (use the same values for the capacitors as channel A, listed later on). Note: Use the iso gate driver (UCC5304DWV) circuit for the FET on the primary side. **R72** was replaced with a 150 ohm through hole. Use these capaicotrs for the flyout_b output: 10pF + 100pF + 47nF + 1uF + 470uF + 1mF + 22mF.
+3. Check the flyback transformer outputs VDC at `FLY_OUT_B`.
+	- Run the Channel_B_Transformer1.cpp file.
+		- With the MCU, send a fixed PWM at the same frequency for *B_DRIVE* as *A_DRIVE* for the transformer with a 25% duty cycle. Record the VDC at `FLY_OUT_B` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
+			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
+		- Verify one last time that `PRI_GND`, `A_GND`, and `B_GND` are all isolated from each other (using an ohmmeter).
+		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
+4. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_B`.
+	- Edit and run the Channel_B_Transform1.cpp file.
+		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*.
+		- Make sure these duty cycles are very close to the duty cycles found in Channel A, if not the same. 
+5. Record PWM duty cycle vs. VDC output.
+	- Run the Channel_B_Transformer2.cpp file.
+		- Measure the output voltage, `FLY_OUT_B`, with the duty cycle sweeping across from *minimum duty cycle* & *maximum duty cycle* in the *percent accuracy* increments so the total interval is 50 seconds using the *sweep measurement*.
+			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
+		- Some extra notes
+			- The flyback transformer is expected to output 20V to 10V in normal operation. 
+			- The 12V number will be used for LV circuit and WON'T change.
+			- These ***won't*** be the final numbers for the min and max duty cycle for Channel B and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
 
 
 
@@ -206,18 +259,6 @@
 		- Set the `CHANNEL_A` output to be 1V, 6V, 12V, and 20V. 
 		- Measure the `CHANNEL_A` output at the end of the XT30 connector and verify the ripple is below 20mV. 
 			- If the ripple is greater than 20mV, increase the capacitance for **C44** and test again.
-		
-## Channel B ESP32
-1. This is to test the ESP32 is powered on. 
-2. Solder on **J10, J11**, or the header pins for the ESP32 MCU B.
-3. Place the ESP32 on following the orientation on the board.
-	- Verify the LED on the ESP32 module turns on.
-4. Solder on **Q6, Q8, R19, R20** and test points `BUCK_B_nPWM`, `BUCK_B_PWM`, & `OUT_B_LV`.
-5. Determine the accuracy of PWM duty cycle & logical level shift voltage levels.
-	- Run the Channel_B_ESP32_PWM.cpp file.
-		- Connect the `OUT_B_LV` to `B_5V` & measure this voltage.
-		- Set the PWM to 10kHz with 10% duty cycle and measure how accurate the duty cycle is on the `BUCK_B_PWM` and `BUCK_B_nPWM` (should be 1 - duty cycle) & record the difference. This accuracy will be denoted as the *percent accuracy*.
-			- Make sure that the logical levels for these circuits switches between `B_GND` & `B_5V`. 
-		- Run these tests again in increasing order of 10kHz until you reach 50kHz and measure the *percent accuracy* for each frequency.
+
 
 
