@@ -207,6 +207,17 @@
 		- Measure the `CHANNEL_A` output at the end of the XT30 connector and verify the ripple is below 20mV. 
 			- If the ripple is greater than 20mV, increase the capacitance for **C44** and test again.
 		
-
+## Channel B ESP32
+1. This is to test the ESP32 is powered on. 
+2. Solder on **J10, J11**, or the header pins for the ESP32 MCU B.
+3. Place the ESP32 on following the orientation on the board.
+	- Verify the LED on the ESP32 module turns on.
+4. Solder on **Q6, Q8, R19, R20** and test points `BUCK_B_nPWM`, `BUCK_B_PWM`, & `OUT_B_LV`.
+5. Determine the accuracy of PWM duty cycle & logical level shift voltage levels.
+	- Run the Channel_B_ESP32_PWM.cpp file.
+		- Connect the `OUT_B_LV` to `B_5V` & measure this voltage.
+		- Set the PWM to 10kHz with 10% duty cycle and measure how accurate the duty cycle is on the `BUCK_B_PWM` and `BUCK_B_nPWM` (should be 1 - duty cycle) & record the difference. This accuracy will be denoted as the *percent accuracy*.
+			- Make sure that the logical levels for these circuits switches between `B_GND` & `B_5V`. 
+		- Run these tests again in increasing order of 10kHz until you reach 50kHz and measure the *percent accuracy* for each frequency.
 
 
