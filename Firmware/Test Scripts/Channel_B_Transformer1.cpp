@@ -5,6 +5,7 @@
 
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
+#include <Wire.h>
 
 const int A_BUTT = 23; // MCU_B_GPIO23
 const int DRIVE = 19; // MCU_B_GPIO19
@@ -19,6 +20,7 @@ int prevStateA = 0;
 
 void setup() 
 {
+  Wire.begin(27, 22); //changing SDA pin from 21 -> 27 because of coupling with DRIVE
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
