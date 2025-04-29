@@ -22,7 +22,7 @@ void setup()
   lcd.init();                  
   lcd.backlight();
   pinMode(A_BUTT, INPUT);
-  ledcSetup(0, 55000, 10); // 55kHz
+  ledcSetup(0, 42000, 10); // 42kHz
   ledcAttachPin(DRIVE, 0);
 }
 
