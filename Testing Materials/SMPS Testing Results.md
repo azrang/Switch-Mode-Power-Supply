@@ -227,17 +227,17 @@
 ## Channel B Transformers
 1. This is to test the flyback & feedback transformer.
 2. Solder on **Q40, Q41, Q48, R102, T3** and test points `FLY_OUT_B`, `PRI_FET_B` & `SEC_FET_B` (use the same values for the capacitors as channel A, listed later on). Note: Use the iso gate driver (UCC5304DWV) circuit for the FET on the primary side. **R72** was replaced with a 150 ohm through hole. Use these capaicotrs for the flyout_b output: 10pF + 100pF + 47nF + 1uF + 470uF + 1mF + 22mF.
-3. Check the flyback transformer outputs VDC at `FLY_OUT_B`.
+4. Check the flyback transformer outputs VDC at `FLY_OUT_B`.
 	- Run the Channel_B_Transformer1.cpp file.
 		- With the MCU, send a fixed PWM at the same frequency for *B_DRIVE* as *A_DRIVE* for the transformer with a 25% duty cycle. Record the VDC at `FLY_OUT_B` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
 		- Verify one last time that `PRI_GND`, `A_GND`, and `B_GND` are all isolated from each other (using an ohmmeter).
 		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
-4. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_B`.
+5. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_B`.
 	- Edit and run the Channel_B_Transform1.cpp file.
 		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*.
 		- Make sure these duty cycles are very close to the duty cycles found in Channel A, if not the same. 
-5. Record PWM duty cycle vs. VDC output.
+6. Record PWM duty cycle vs. VDC output.
 	- Run the Channel_B_Transformer2.cpp file.
 		- Measure the output voltage, `FLY_OUT_B`, with the duty cycle sweeping across from *minimum duty cycle* & *maximum duty cycle* in the *percent accuracy* increments so the total interval is 50 seconds using the *sweep measurement*.
 			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
@@ -246,7 +246,7 @@
 			- The 12V number will be used for LV circuit and WON'T change.
 			- These ***won't*** be the final numbers for the min and max duty cycle for Channel B and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
 
-
+7. Problem was found with the proximity of the LCD SDA pin and the drive PWM pin. Coupling was putting the ESP32 into an undetermined state. Changed the PWM output pin to GPIO27 and soldered a wire between GPIO19 and GPIO27. Coupling problem was solved.
 
 ## Channel A External Connections Part 2
 1. This is testing the input potentiometer & XT30 connector for `CHANNEL_A`.
