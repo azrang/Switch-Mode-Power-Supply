@@ -233,7 +233,7 @@
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
 		- Verify one last time that `PRI_GND`, `A_GND`, and `B_GND` are all isolated from each other (using an ohmmeter).
 		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
-5. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_B`.
+5. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_B`.1
 	- Edit and run the Channel_B_Transform1.cpp file.
 		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*.
 		- Make sure these duty cycles are very close to the duty cycles found in Channel A, if not the same. 
@@ -246,8 +246,8 @@
 			- The 12V number will be used for LV circuit and WON'T change.
 			- These ***won't*** be the final numbers for the min and max duty cycle for Channel B and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
 
-7. Problem was found with the proximity of the LCD SDA pin and the drive PWM pin. Coupling was putting the ESP32 into an undetermined state. Changed the PWM output pin to GPIO27 and soldered a wire between GPIO19 and GPIO27. Coupling problem was solved.
-
+7. Problem was found with the proximity of the LCD SDA pin (GPIO21) and the drive PWM pin (GPIO19). PWM pin seems to cause some sort of EMI that interferes with the ESP32 and the I2C lines. Changed the flyback drive pin to GPIO12. Resoldered **Q48** and the 150 ohm resistor to be floating to prevent the PWM signal from any interferance on the internal trace of the PCB.
+   
 ## Channel A External Connections Part 2
 1. This is testing the input potentiometer & XT30 connector for `CHANNEL_A`.
 2. Solder on external JST connectors for Channel A labelled **A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**.
