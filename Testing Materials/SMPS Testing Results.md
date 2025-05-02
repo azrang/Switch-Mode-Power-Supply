@@ -1,4 +1,4 @@
-The screenshots were taken on a MSO
+The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 
 # 1. Input Circuit
 
