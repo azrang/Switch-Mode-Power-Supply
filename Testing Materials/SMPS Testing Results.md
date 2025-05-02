@@ -146,7 +146,10 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 9. Tested LV and HV side.
  	- There is a strong ripple after the buck starts driving the transformer input. Usually lasts for a maximum of 15 seconds and then settles to a lower ripple. Frequency does not affect the ripple time, nor does starting with a large voltage and decreasing or a low voltage and increasing the buck output voltage. It was found that 1% per 100ms is better  than 3% per 200ms for the buck PWM control. Based on how long the circuit was discharged for, the spikes last less.
  	 - Large ripple needs to be addressed, possibly snubbers, smaller caps etc.
-10. Added additional capacitors to reduce the rippling on the buck converter. The final cap values on the buck circuit are: 10pF, 10uF, and 47uF. This is what the final output looks like for the buck converter circuit 
+10. Added additional capacitors to reduce the rippling on the buck converter.
+	 - The final cap values on the buck circuit are: 10pF, 10uF, and 47uF.
+  	 - This is what the final output looks like for the buck converter circuit @ 35kHz and 50% duty cycle.
+![04-25_test8_buck_new_caps_zoomed_out](Images/04-25_test8_buck_new_caps_zoomed_out.png)
 
 
 ## Channel A Current Sense & OVP
