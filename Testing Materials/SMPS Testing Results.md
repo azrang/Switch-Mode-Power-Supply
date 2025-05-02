@@ -183,6 +183,9 @@
 		- Mapped the output voltages measured at `A_PROT_OUT` to the ADC readings (displayed on the LCD screen).
   - ![Voltage_Feedback](Images/Voltage_Feedback.png)
 
+
+---
+
 ## Channel B LVDD
 1. Tested the `B_5V` & `B_3V3` rail.
 2. Soldered on the same set of components as Channel A (**C13, C14, C15, C16, C17, C19, D44, L2, L6, R97, U4**) and test points for `B_GND`, `B_5V`. 
