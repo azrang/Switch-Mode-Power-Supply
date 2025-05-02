@@ -245,34 +245,45 @@ The screenshots of the waveforms were taken on a MSO-X 2012A oscilloscope.
 	- Run the Channel_B_Transformer1.cpp file.
 		- With the MCU, send a fixed PWM at the same frequency for *B_DRIVE* as *A_DRIVE* for the transformer with a 25% duty cycle. Record the VDC at `FLY_OUT_B` (should be approximately 10.9V $\pm$ 2V) & record how long it takes for the output to settle (call this *transformer settle time*).
 			- ***MAKE SURE THE DUTY CYCLE IS BELOW 50% ALWAYS!!!***
+   		- This is what the waveform looks like for this step (expected 3V output):
+       ![b_flyout_3v](Images/b_flyout_3v.png)
 		- Verify one last time that `PRI_GND`, `A_GND`, and `B_GND` are all isolated from each other (using an ohmmeter).
-		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***. 
+		- Check capacitor voltage is 0V after the rocker switch is OFF after the ***universal wait time***.
+  	- Note: The isolated gate driver VDD was also checked since it was seen before the VDD line on the primary side of the circuit drops significant when the chip is being used vs. not being used. This is displayed by the green waveform on the image below:
+     ![pri_iso_vdd_1butt](Images/pri_iso_vdd_1butt.png)
 5. Determine the duty cycle needed for 10V, 12V, 20V at `FLY_OUT_B`.1
 	- Edit and run the Channel_B_Transform1.cpp file.
 		- Based on the previous step, determine at what duty cycle 10V, 12V, and 20V occurs at. Record these values as *minimum duty cycle*, *LV duty cycle*, & *maximum duty cycle*.
 		- Make sure these duty cycles are very close to the duty cycles found in Channel A, if not the same. 
-6. Record PWM duty cycle vs. VDC output.
-	- Run the Channel_B_Transformer2.cpp file.
-		- Measure the output voltage, `FLY_OUT_B`, with the duty cycle sweeping across from *minimum duty cycle* & *maximum duty cycle* in the *percent accuracy* increments so the total interval is 50 seconds using the *sweep measurement*.
-			- If duty cycle to voltage is nonlinear, use a line of best fit to estimate.
-		- Some extra notes
-			- The flyback transformer is expected to output 20V to 10V in normal operation. 
-			- The 12V number will be used for LV circuit and WON'T change.
-			- These ***won't*** be the final numbers for the min and max duty cycle for Channel B and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-7. Problem was found with the proximity of the LCD SDA pin (GPIO21) and the drive PWM pin (GPIO19). PWM pin seems to cause some sort of EMI that interferes with the ESP32 and the I2C lines. Changed the flyback drive pin to GPIO12. Resoldered **Q48** and the 150 ohm resistor to be floating to prevent the PWM signal from any interferance on the internal trace of the PCB.
-	- a
+6. Problem was found with the proximity of the LCD SDA pin (GPIO21) and the drive PWM pin (GPIO19). PWM pin seems to cause some sort of EMI that interferes with the ESP32 and the I2C lines. Changed the flyback drive pin to GPIO12. Resoldered **Q48** and the 150 ohm resistor to be floating to prevent the PWM signal from any interferance on the internal trace of the PCB.
    
-## Channel A External Connections Part 2
-1. This is testing the input potentiometer & XT30 connector for `CHANNEL_A`.
-2. Solder on external JST connectors for Channel A labelled **A_V_POT, A_C_POT** and the XT30 connecter, **CHANNEL_A_CONN**.
-3. Test to make sure the potentiometers work.
-	- Run the Channel_A_Ext_Conn2.cpp file.
-		- The pot inputs do adjust their respective voltage (1V-20V) and current values (0A-3A) and it is displayed on the LCD screen.
-4. Test to make sure the `CHANNEL_A` XT30 connector works.
-	- Run the Channel_A_Ext_Conn3.cpp file.
-		- Set the `CHANNEL_A` output to be 1V, 6V, 12V, and 20V. 
-		- Measure the `CHANNEL_A` output at the end of the XT30 connector and verify the ripple is below 20mV. 
-			- If the ripple is greater than 20mV, increase the capacitance for **C44** and test again.
+# What Happened Afterwards for Channel B
+After the flyback transformer for Channel B seemed to work for a fix voltage, there was massive rippling and constant buzzing from the transformer no matter what duty cycle was sent to the transformer (including 3V), and there was no *settle time* this time for the transformer. Sometimes the buzzing would be insistent for 2 minutes with no end to it, other times the buzzing would gradually get larger until we turned off the circuit. These buzzing can be seen in the images below: 
+![b_flyout_sweep_fail](Images/b_flyout_sweep_fail.png)
+![unreg_flyoutb_sweep](Images/unreg_flyoutb_sweep.png)
+
+After reviewing the design, it is most likely that the transformer buzzed due to magnetostriction, since the transformer weren't flushly mountly against the PCB (the dot polarity had to be swapped through wire rework). The magnetostriction caused audible buzzing in addtion making the voltage a lot less stable which increased the ripple of the voltages.
+ 	- We found that that the `UNREG_DC` also had substantial ripple after connecting the flyback transformer for Channel (seen by the yellow waveform in the image below), which can be explained by the phenomeon above.
+	![pri_unreg_dc_ripple1](Images/pri_unreg_dc_ripple1.png)
+
+No further screenshots were taking during this process, but this conclusion was reached when testing the I2C line (for the LCD screen) in isolation and there were no issues, but issues always arose when the flyback transformer B was drive with a PWM signal. 
+
+When probing the waveform and looking at the LCD screen, we noticed that the MCU would switch between states in the Channel_B_Transformer2.cpp file (where the LCD would flip between the PWM reading and PWM 0). The root cause of this was never fully determined as to what caused this & why the MCU would glitch out like this (the states and PWM signal would function properly when the MCU was tested in isolation and only flip constantly when it was running the code on the PCB). It was noticed that there would be a 20ms (~50Hz) delay before the MCU PWM waveform would drop, continue, then drop after 25ms and it would cycle like this continuously. One theory was that the 50Hz could be source from the main line transformer (which steps down 120V to 24V), but as to why this would be occuring, and why it was 50Hz and not 60Hz it couldn't be explained. The transformer was noticed to be physically vibrating when the circuit was switched ON.
+
+After this we attempted to test Channel A again but the buzzing was much more audible and while waiting to see if the transformer would settle or not, the transformer stopped working anf `FLY_OUT_A` no longer produced an output despite the PWM signal was still being generated. We decided from here to forgo anymore testing using all flyback transformer.
+
+# Channel C Testing
+To test Channel C, the entire board was soldered on at once due to the approaching deadline. Channel C was tested to see if theoretically a voltage supplied to `FLY_OUT_C` if the rest of the USB-C circuit would work or not by injecting a 5V signal into `BC_5V` & `FLY_OUT_C` from an external power supply. 
+
+The first waveform shows that OVP circuit for Channel C works where the green waveform is `FLY_OUT_C` and the yellow is `C_PROT_OUT`.
+![flyout_c_psu_ext](Images/flyout_c_psu_ext.png)
+
+The next waveform was to display that the button for Channel C does enable the output for TPS25810RVCR. Note that the voltage for the `USB_5V` would only be enabled if there's a load connected at the end of the USB connector (since USB protocol required the CC pull down resistors to be detected to supply an output). The first waveform shows when the button is off, the second shows when the button is connected where the yellow waveform is `C_PROT_OUT` and the green waveform is `USB_5V`.
+![flyout_c_psu_ext](Images/flyout_c_psu_ext.png)
+![usb_5v_butt_on_5amp](Images/usb_5v_butt_on_5amp.png)
+
+For the 2nd image above, the load connected to the USB-C was the 
+
 
 
 
