@@ -1,4 +1,4 @@
-The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
+The screenshots of the waveforms were taken on a MSO-X 2012A oscilloscope.
 
 # 1. Input Circuit
 
@@ -112,6 +112,8 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 	- Also noticed that the previous PCB also had damage to the `PRI_GND` trace.
 5. After multiple frequency and duty tests were ran it was found that as the switching frequency increases, the maximum `FLY_OUT_A` voltage decreases. This means that a "buzzing" sound is heard the higher the duty cycle is set to. However, the overall voltage ripple decreases as the frequency increases. By decreasing the frequency, the "buzzing" sound will be heard at a higher frequency.
    - A frequency of 42kHz was finalized for the transformer after multiple tests were ran. The available duty cycles were also set to 10%-40% which translates to `FLY_OUT_A` voltages of 3.35V-18.78V. The minimum time delay between stepping up the duty cycle was determined to be 1% per 0.1s in the code, or 1% per 0.18s after measured on the oscilloscope.
+   - The graph below displays a snapshot of the flyout transformer output (yellow).
+	![04-25_test7_flyout_new_caps_zoomed_out](Images/04-25_test7_flyout_new_caps_zoomed_out.png)
   
 
 ## Channel A HV/LV 
@@ -148,7 +150,7 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
  	 - Large ripple needs to be addressed, possibly snubbers, smaller caps etc.
 10. Added additional capacitors to reduce the rippling on the buck converter.
 	 - The final cap values on the buck circuit are: 10pF, 10uF, and 47uF.
-  	 - This is what the final output looks like for the buck converter circuit @ 35kHz and 50% duty cycle.
+  	 - This is what the final output looks like for the buck converter circuit @ 35kHz and 50% duty cycle (green is buck converter, yellow is flyout transformer).
 ![04-25_test8_buck_new_caps_zoomed_out](Images/04-25_test8_buck_new_caps_zoomed_out.png)
 
 
@@ -201,6 +203,8 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 4. Soldered on **C18, D43, U3, R96** & test point for `B_3V3`.
 5. Checked the `B_3V3` rail.
 	- The red LED is ON.
+ 	- Screenshot showing BC_5V and BC_3V3 waveforms:
+	![bc_lvdd](Images/bc_lvdd.png)
 
 ## Channel B ESP32
 1. This is to test the ESP32 is powered on. 
@@ -208,7 +212,9 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 3. Place the ESP32 on following the orientation on the board.
 	- Verify the LED on the ESP32 module turns on.
 4. Solder on **Q6, Q8, R19, R20** and test points `BUCK_B_nPWM`, `BUCK_B_PWM`, & `OUT_B_LV`
-   	- Added $1k\Omega$ parallel resistor to **R19 & R20** to decrease overall resistance..
+   	- Added $1k\Omega$ parallel resistor to **R19 & R20** to decrease overall resistance.
+   	- Waveform of the logical level shift circuits can be seen in the waveform (yellow and green are NOT'd of each other).
+   	![b_buck_pwm_acc_35khz](Images/b_buck_pwm_acc_35khz.png)
 6. Determine the accuracy of PWM duty cycle & logical level shift voltage levels.
 	- Run the Channel_B_ESP32_PWM.cpp file.
 		- Connect the `OUT_B_LV` to `B_5V` & measure this voltage.
@@ -232,7 +238,6 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 		- Make sure the temperature sensor sends a LOW signal with hot air gun at $55^{\circ}C$ (can set it up to $65^{\circ}C$) aimed at the temperature sensor and this is displayed on the LCD.
 			- The temperature sensor should go off at around $53^{\circ}C$.
 
-
 ## Channel B Transformers
 1. This is to test the flyback & feedback transformer.
 2. Solder on **Q40, Q41, Q48, R102, T3** and test points `FLY_OUT_B`, `PRI_FET_B` & `SEC_FET_B` (use the same values for the capacitors as channel A, listed later on). Note: Use the iso gate driver (UCC5304DWV) circuit for the FET on the primary side. **R72** was replaced with a 150 ohm through hole. Use these capaicotrs for the flyout_b output: 10pF + 100pF + 47nF + 1uF + 470uF + 1mF + 22mF.
@@ -254,8 +259,8 @@ The screenshots of the waveform were taken on a MSO-X 2012A oscilloscope.
 			- The flyback transformer is expected to output 20V to 10V in normal operation. 
 			- The 12V number will be used for LV circuit and WON'T change.
 			- These ***won't*** be the final numbers for the min and max duty cycle for Channel B and PWM duty cycle, since there will be a voltage drop (i.e. there's a diode in line to prevent reverse polarity). 
-
 7. Problem was found with the proximity of the LCD SDA pin (GPIO21) and the drive PWM pin (GPIO19). PWM pin seems to cause some sort of EMI that interferes with the ESP32 and the I2C lines. Changed the flyback drive pin to GPIO12. Resoldered **Q48** and the 150 ohm resistor to be floating to prevent the PWM signal from any interferance on the internal trace of the PCB.
+	- a
    
 ## Channel A External Connections Part 2
 1. This is testing the input potentiometer & XT30 connector for `CHANNEL_A`.
