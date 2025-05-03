@@ -282,8 +282,8 @@ The next waveform was to display that the button for Channel C does enable the o
 ![flyout_c_psu_ext](Images/flyout_c_psu_ext.png)
 ![usb_5v_butt_on_5amp](Images/usb_5v_butt_on_5amp.png)
 
-For the 2nd image above, the load connected to the USB-C was the 
-
+For the 2nd image above, the load connected to the USB-C was the [DROK USB Load Tester](https://a.co/d/2gTHWYz). A [Power-Z KM003C](https://a.co/d/hrM3BIw) USB-C oscilloscope reader used to record the voltage, current, and power rating supplied from Channel-C. Unfortunately there was no good way of saving images from this oscilloscope. The image above shows the results when the USB-C load tester draws 0.5A of current, diplaying that the voltage does give a steady 5V. This worked up until 0.8A, where after 0.8A, Channel C has massive ripples which it can't recover from causing the load to be disconnected. This is seen in the image below:
+![usb_5v_butt_on_1amp](Images/usb_5v_butt_on_1amp.png)
 
 
 
