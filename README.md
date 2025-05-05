@@ -1,10 +1,10 @@
 # Switch Mode Power Supply
 
-This is a GitHub repo displaying all the files for the 2025 Cooper Union senior project, including the LTSpice simulations, and any final design files (block diagram, schematic, layout, etc.) for any boards manufactured. 
+This is a GitHub repo displaying all the files for the 2025 Cooper Union senior project, including the LTSpice simulations, firmware, testing procedures, and any final design files (block diagram, schematic, layout, etc.) for any boards manufactured. 
 
 ## Goals
 The goal of this senior project is to make a Switch Mode Power Supply that can:
-- Be SAFE (the 120V from the wall will be stepped down to 24V using a transformer)
+- Be SAFE (the 120V from the wall will be stepped down to 24V RMS using a transformer)
 - Do AC-DC conversion so it can be used as a lab bench power supply
 - Have 2 independent channels that range from 1-20V and 0-3A
 - Support series and parallel mode for these channels
@@ -16,9 +16,9 @@ The goal of this senior project is to make a Switch Mode Power Supply that can:
 ## Circuitry
 Some of the circuitry for the project include:
 - Safety Circuits
-    - Common choke
+    - Common mode choke
     - Zener diodes
-    - (@ilona you got this part)
+    - OVP
     - OCP
     - UVP
 - Diode Rectifier
@@ -31,9 +31,8 @@ Some of the circuitry for the project include:
 - 3 isolated grounds
 
 ## Firmware
-Arduino IDE Setup:
-- ESP32 Dev Module Board Type
-- Upload Speed: 115200
+Two ESP32 Dev Modules processing feedback and driving the circuit.
+
 
 # Contributors
 This project was done by a group of three friends:
